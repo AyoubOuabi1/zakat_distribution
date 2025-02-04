@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ZakatDistributionApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ZakatDistributionApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ZakatDistributionApplication.class, args);
+    }
 
 }
