@@ -1,0 +1,16 @@
+input{
+  background-color: #f3f7fa;
+}
+.small-text {
+  font-size: 0.85rem; /* Smaller font size for labels */
+}
+
+.login-link {
+  color: #007bff; /* Blue color */
+  text-decoration: none; /* Remove underline */
+}
+
+.login-link:hover {
+  color: #0056b3; /* Darker blue when hovered */
+  text-decoration: underline; /* Add underline on hover */
+}

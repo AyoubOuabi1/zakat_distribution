@@ -6,8 +6,7 @@ import org.zakat.distribution.entities.User;
 import org.zakat.distribution.entities.Zakat;
 
 import java.time.LocalDate;
-@Getter
-@Setter
+
 public class ZakatDTO {
     private Double amountReceived;
     private LocalDate dateReceived;
@@ -32,5 +31,20 @@ public class ZakatDTO {
         return zakat;
     }
 
+    public Double getAmountReceived() {
+        return amountReceived;
+    }
+
+    public void setAmountReceived(Double amountReceived) {
+        this.amountReceived = amountReceived;
+    }
+
+    public LocalDate getDateReceived() {
+        return dateReceived;
+    }
+
+    public void setDateReceived(LocalDate dateReceived) {
+        this.dateReceived = dateReceived;
+    }
 }
 

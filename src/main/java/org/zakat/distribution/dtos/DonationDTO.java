@@ -8,8 +8,7 @@ import org.zakat.distribution.entities.User;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+
 public class DonationDTO {
     private Double amount;
     private String paymentMethod;
@@ -42,5 +41,36 @@ public class DonationDTO {
         return donation;
     }
 
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentDetails() {
+        return paymentDetails;
+    }
+
+    public void setPaymentDetails(String paymentDetails) {
+        this.paymentDetails = paymentDetails;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }
 

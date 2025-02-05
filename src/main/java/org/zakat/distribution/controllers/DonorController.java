@@ -8,7 +8,7 @@ import org.zakat.distribution.services.DonationService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/donation")
+@RequestMapping("/donation")
 public class DonorController {
 
     private final DonationService donationService;

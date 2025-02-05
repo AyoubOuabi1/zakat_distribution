@@ -7,8 +7,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
 public class Zakat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +17,37 @@ public class Zakat {
 
     @ManyToOne
     private User receiver;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Double getAmountReceived() {
+        return amountReceived;
+    }
+
+    public void setAmountReceived(Double amountReceived) {
+        this.amountReceived = amountReceived;
+    }
+
+    public LocalDate getDateReceived() {
+        return dateReceived;
+    }
+
+    public void setDateReceived(LocalDate dateReceived) {
+        this.dateReceived = dateReceived;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
 }
 
