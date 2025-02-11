@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-8 col-12">
+      <div class="card shadow-sm rounded-4 p-4">
+        <h2 class="text-center mb-4">User Profile</h2>
+
+        <!-- Profile Form -->
+        <form (ngSubmit)="onSubmit()">
+
+          <!-- Full Name and Email in the same line on larger screens, single line on small screens -->
+          <div class="row mb-3">
+            <div class="col-md-6 col-12">
+              <label for="fullName" class="form-label small-text">Full Name</label>
+              <input type="text" id="fullName" class="form-control form-control-sm" [(ngModel)]="user.fullName" name="fullName" placeholder="Enter your full name" required>
+            </div>
+            <div class="col-md-6 col-12">
+              <label for="email" class="form-label small-text">Email</label>
+              <input type="email" id="email" class="form-control form-control-sm" [(ngModel)]="user.email" name="email" placeholder="Enter your email" required>
+            </div>
+          </div>
+
+          <!-- Address and Phone Number in the same line on larger screens, single line on small screens -->
+          <div class="row mb-3">
+            <div class="col-md-6 col-12">
+              <label for="address" class="form-label small-text">Address</label>
+              <input type="text" id="address" class="form-control form-control-sm" [(ngModel)]="user.address" name="address" placeholder="Enter your address" required>
+            </div>
+            <div class="col-md-6 col-12">
+              <label for="phoneNumber" class="form-label small-text">Phone Number</label>
+              <input type="text" id="phoneNumber" class="form-control form-control-sm" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+            </div>
+          </div>
+
+          <!-- Canton and Postal Code in the same line on larger screens, single line on small screens -->
+          <div class="row mb-3">
+            <div class="col-md-6 col-12">
+              <label for="canton" class="form-label small-text">Canton</label>
+              <input type="text" id="canton" class="form-control form-control-sm" [(ngModel)]="user.canton" name="canton" placeholder="Enter canton" required>
+            </div>
+            <div class="col-md-6 col-12">
+              <label for="postalCode" class="form-label small-text">Postal Code</label>
+              <input type="text" id="postalCode" class="form-control form-control-sm" [(ngModel)]="user.postalCode" name="postalCode" placeholder="Postal Code" required>
+            </div>
+          </div>
+
+          <!-- Role selection -->
+          <div class="mb-3">
+            <label for="role" class="form-label small-text">Role</label>
+            <select id="role" class="form-control form-control-sm" [(ngModel)]="user.role" name="role">
+              <option value="DONOR">Donor</option>
+              <option value="RECEIVER">Receiver</option>
+            </select>
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-primary w-100 btn-sm">Update Profile</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

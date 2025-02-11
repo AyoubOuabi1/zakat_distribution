@@ -1,0 +1,38 @@
+input{
+  background-color: #f3f7fa;
+}
+
+/* Small font size for labels and text */
+.small-text {
+  font-size: 0.85rem; /* Smaller font size for labels */
+}
+
+
+.login-link {
+  color: #007bff; /* Blue color */
+  text-decoration: none; /* Remove underline */
+}
+
+.login-link:hover {
+  color: #0056b3; /* Darker blue when hovered */
+  text-decoration: underline; /* Add underline on hover */
+}
+/* Optional: Responsive adjustments for smaller screens */
+@media (max-width: 576px) {
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .card {
+    padding: 2rem;
+  }
+
+  .btn {
+    font-size: 0.85rem; /* Smaller button text */
+  }
+
+  .form-control {
+    font-size: 0.85rem; /* Smaller font size for form inputs */
+  }
+}

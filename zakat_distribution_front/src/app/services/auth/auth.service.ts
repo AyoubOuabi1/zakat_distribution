@@ -15,13 +15,15 @@ export class AuthService {
     const loginData = { email, password };
     return this.http.post(this.apiLoginUrl, loginData);
   }
-
+  getToken(): string | null {
+    return localStorage.getItem('auth_token');
+  }
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('auth_token');
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('token') !== null;
+    return localStorage.getItem('auth_token') !== null;
   }
 
 

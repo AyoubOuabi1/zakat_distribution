@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zakat.distribution.dtos.UserDTO;
 import org.zakat.distribution.services.UserService;
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/profile")
 public class UserController {
 
     private final UserService userService;

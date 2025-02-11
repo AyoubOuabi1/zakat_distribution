@@ -7,11 +7,16 @@ import {User} from "../../models/user/user";
   providedIn: 'root'
 })
 export class UserService {
-  private userUrl = `http://localhost:8080/user`;
+  private apiUrl = `http://localhost:8080/user`;
 
   constructor(private http: HttpClient) {}
 
-  getUserData():Observable<User> {
-    return this.http.get<User>(this.userUrl)
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/profile`);
+  }
+
+  // Update the user's profile data
+  updateUserProfile(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/profile`, user);
   }
 }
