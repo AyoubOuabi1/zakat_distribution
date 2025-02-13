@@ -7,6 +7,8 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {HomeComponent} from "./home/home.component";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 
 const routes: Routes = [
@@ -24,6 +26,13 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

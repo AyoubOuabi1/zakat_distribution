@@ -7,8 +7,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.List;
-
 @SpringBootApplication
 public class ZakatDistributionApplication {
 
@@ -16,5 +14,16 @@ public class ZakatDistributionApplication {
         SpringApplication.run(ZakatDistributionApplication.class, args);
     }
 
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        source.registerCorsConfiguration("/**", config);
 
+        return new CorsFilter(source);
+    }
 }

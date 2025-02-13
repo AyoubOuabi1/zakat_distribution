@@ -25,7 +25,6 @@ export class UserProfileComponent implements OnInit {
     this.fetchUserProfile();
   }
 
-  // Fetch the user's profile data
   fetchUserProfile(): void {
     this.userService.getUserProfile().subscribe(
       (data: User) => {
