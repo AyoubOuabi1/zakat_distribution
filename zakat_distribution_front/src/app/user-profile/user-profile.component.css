@@ -36,3 +36,21 @@ input{
     font-size: 0.85rem; /* Smaller font size for form inputs */
   }
 }
+
+.qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.qr-container img {
+  max-width: 140px;
+  max-height: 140px;
+  object-fit: contain;
+}
+
+.image-card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
