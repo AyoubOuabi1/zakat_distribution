@@ -11,6 +11,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { DonationTableComponent } from './donation-table/donation-table.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     SignUpComponent,
     DashboardComponent,
     HomeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    DonationTableComponent
   ],
   imports: [
     BrowserModule,

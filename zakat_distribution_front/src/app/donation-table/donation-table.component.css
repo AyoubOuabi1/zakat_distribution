@@ -1,0 +1,28 @@
+.container {
+  max-width: 900px;
+}
+
+.modal-content {
+  border-radius: 10px;
+}
+
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.btn {
+  font-size: 0.9rem;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
