@@ -12,7 +12,7 @@ export class DonationService {
   constructor(private http: HttpClient) {}
 
   getDonations(): Observable<Donation[]> {
-    return this.http.get<Donation[]>(this.apiUrl);
+    return this.http.get<Donation[]>(`${this.apiUrl}/history`);
   }
 
    addDonation(donation: Donation): Observable<Donation> {

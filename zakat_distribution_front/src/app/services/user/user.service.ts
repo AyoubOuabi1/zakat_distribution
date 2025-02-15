@@ -18,4 +18,12 @@ export class UserService {
   updateUserProfile(user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/profile`, user, { withCredentials: true });
   }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/all`);
+  }
+
+  getUserRole(): string | null {
+    return localStorage.getItem('role');
+  }
 }

@@ -14,6 +14,9 @@ import org.zakat.distribution.entities.User;
 import org.zakat.distribution.exceptions.ResourceNotFoundException;
 import org.zakat.distribution.repositories.UserRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -23,7 +26,12 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(UserDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
     public UserDTO registerUser(RegisterDTO registerDTO) {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             throw new IllegalArgumentException("Email is already in use.");

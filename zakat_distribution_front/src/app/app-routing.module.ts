@@ -10,6 +10,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {DonationTableComponent} from "./donation-table/donation-table.component";
+import {UserListComponent} from "./user-list/user-list.component";
 
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'profile', component: UserProfileComponent },
-      { path: 'history', component: DonationTableComponent },
+      { path: 'donation/history', component: DonationTableComponent },
+      { path: 'users', component: UserListComponent },
       { path: '', redirectTo: 'profile', pathMatch: 'full' }
     ], canActivate: [AuthGuard]
   },

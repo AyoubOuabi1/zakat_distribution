@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DonationTableComponent } from './donation-table/donation-table.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DonationTableComponent } from './donation-table/donation-table.componen
     DashboardComponent,
     HomeComponent,
     UserProfileComponent,
-    DonationTableComponent
+    DonationTableComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
