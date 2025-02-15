@@ -8,16 +8,27 @@ import org.zakat.distribution.entities.Zakat;
 import java.time.LocalDate;
 
 public class ZakatDTO {
+    private Long id;
     private Double amountReceived;
     private LocalDate dateReceived;
 
-    public ZakatDTO(Double amountReceived, LocalDate dateReceived) {
+    public ZakatDTO(Long id, Double amountReceived, LocalDate dateReceived) {
+        this.id = id;
         this.amountReceived = amountReceived;
         this.dateReceived = dateReceived;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public static ZakatDTO fromEntity(Zakat zakat) {
         return new ZakatDTO(
+                zakat.getId(),
                 zakat.getAmountReceived(),
                 zakat.getDateReceived()
         );
@@ -26,7 +37,7 @@ public class ZakatDTO {
     public static Zakat toEntity(ZakatDTO zakatDTO, User receiver) {
         Zakat zakat = new Zakat();
         zakat.setAmountReceived(zakatDTO.getAmountReceived());
-        zakat.setDateReceived(LocalDate.now());
+        zakat.setDateReceived(zakatDTO.getDateReceived());
         zakat.setReceiver(receiver);
         return zakat;
     }

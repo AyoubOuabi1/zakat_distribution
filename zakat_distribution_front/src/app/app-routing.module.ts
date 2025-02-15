@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AppComponent} from "./app.component";
-import {SignInComponent} from "./sign-in/sign-in.component";
-import {SignUpComponent} from "./sign-up/sign-up.component";
+import {SignInComponent} from "./components/sign-in/sign-in.component";
+import {SignUpComponent} from "./components/sign-up/sign-up.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {HomeComponent} from "./home/home.component";
-import {UserProfileComponent} from "./user-profile/user-profile.component";
+import {UserProfileComponent} from "./components/user-profile/user-profile.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {DonationTableComponent} from "./donation-table/donation-table.component";
-import {UserListComponent} from "./user-list/user-list.component";
+import {DonationTableComponent} from "./components/donation-table/donation-table.component";
+import {UserListComponent} from "./components/user-list/user-list.component";
+import {ReceiveHistoryComponent} from "./components/receive-history/receive-history.component";
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'profile', component: UserProfileComponent },
       { path: 'donation/history', component: DonationTableComponent },
       { path: 'users', component: UserListComponent },
+      { path: 'receive/history', component: ReceiveHistoryComponent },
       { path: '', redirectTo: 'profile', pathMatch: 'full' }
     ], canActivate: [AuthGuard]
   },

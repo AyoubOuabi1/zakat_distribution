@@ -35,6 +35,15 @@
         </svg>
         <span>donation History</span>
       </a>
+
+      <a *ngIf="role==='RECEIVER'" class="nav-link d-flex align-items-center" routerLink="/dashboard/receive/history" routerLinkActive="active">
+        <svg class="me-3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+        <span>receive History</span>
+      </a>
       <a *ngIf="role==='ADMIN'" class="nav-link d-flex align-items-center" routerLink="/dashboard/users" routerLinkActive="active">
         <svg class="me-3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -44,7 +53,9 @@
         </svg>
         <span>Users</span>
       </a>
-
+      <button class="btn btn-primary btn-sm mx-4 mt-2" (click)="logOut()">
+        LogOut
+      </button>
     </nav>
   </div>
 

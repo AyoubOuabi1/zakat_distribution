@@ -1,0 +1,96 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-8 col-12">
+      <div class="card shadow-sm rounded-4 p-4">
+        <h2 class="text-center mb-4">Sign Up</h2>
+
+        <!-- Register Form -->
+        <form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
+
+           <div class="row mb-3">
+            <div class="col-md-6 col-12">
+              <label for="fullName" class="form-label small-text">Full Name</label>
+              <input type="text" id="fullName" class="form-control form-control-sm" [(ngModel)]="user.fullName" name="fullName" placeholder="Enter your full name" required #fullName="ngModel">
+              <div *ngIf="fullName?.invalid && fullName?.touched" class="text-danger">
+                Full Name is required.
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <label for="emailReg" class="form-label small-text">Email</label>
+              <input type="email" id="emailReg" class="form-control form-control-sm" [(ngModel)]="user.email" name="email" placeholder="Enter your email" required #email="ngModel">
+              <div *ngIf="email?.invalid && email?.touched" class="text-danger">
+                Email is required and must be valid.
+              </div>
+            </div>
+          </div>
+
+           <div class="row mb-3">
+            <div class="col-md-6 col-12">
+              <label for="address" class="form-label small-text">Address</label>
+              <input type="text" id="address" class="form-control form-control-sm" [(ngModel)]="user.address" name="address" placeholder="Enter your address" required #address="ngModel">
+              <div *ngIf="address?.invalid && address?.touched" class="text-danger">
+                Address is required.
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <label for="phoneNumber" class="form-label small-text">Phone Number</label>
+              <input type="text" id="phoneNumber" class="form-control form-control-sm" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required #phoneNumber="ngModel">
+              <div *ngIf="phoneNumber?.invalid && phoneNumber?.touched" class="text-danger">
+                Phone Number is required.
+              </div>
+            </div>
+          </div>
+
+           <div class="row mb-3">
+            <div class="col-md-6 col-12">
+              <label for="canton" class="form-label small-text">Canton</label>
+              <input type="text" id="canton" class="form-control form-control-sm" [(ngModel)]="user.canton" name="canton" placeholder="Enter canton" required #canton="ngModel">
+              <div *ngIf="canton?.invalid && canton?.touched" class="text-danger">
+                Canton is required.
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <label for="postalCode" class="form-label small-text">Postal Code</label>
+              <input type="text" id="postalCode" class="form-control form-control-sm" [(ngModel)]="user.postalCode" name="postalCode" placeholder="Postal Code" required #postalCode="ngModel">
+              <div *ngIf="postalCode?.invalid && postalCode?.touched" class="text-danger">
+                Postal Code is required.
+              </div>
+            </div>
+          </div>
+
+           <div class="mb-3">
+            <label for="role" class="form-label small-text">Role</label>
+            <select id="role" class="form-control form-control-sm" [(ngModel)]="user.role" name="role" required #role="ngModel">
+              <option value="DONOR">Donor</option>
+              <option value="RECEIVER">Receiver</option>
+            </select>
+            <div *ngIf="role?.invalid && role?.touched" class="text-danger">
+              Role is required.
+            </div>
+          </div>
+
+           <div class="row mb-3">
+            <div class="col-md-6 col-12">
+              <label for="passwordReg" class="form-label small-text">Password</label>
+              <input type="password" id="passwordReg" class="form-control form-control-sm" [(ngModel)]="user.password" name="password" placeholder="Enter your password" required #password="ngModel" minlength="8" pattern="^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$">
+              <div *ngIf="password?.invalid && password?.touched" class="text-danger">
+                Password must be at least 8 characters long and contain both letters and numbers.
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <label for="confirmPassword" class="form-label small-text">Confirm Password</label>
+              <input type="password" id="confirmPassword" class="form-control form-control-sm" [(ngModel)]="user.confirmPassword" name="confirmPassword" placeholder="Confirm your password" required [ngClass]="{ 'is-invalid': passwordMismatch }" (ngModelChange)="checkPasswordMatch()">
+              <div *ngIf="passwordMismatch" class="text-danger">
+                Passwords do not match!
+              </div>
+            </div>
+          </div>
+
+           <button type="submit" class="btn btn-primary w-100 btn-sm" [disabled]="passwordMismatch || !signUpForm.valid">Sign Up</button>
+
+          <p class="text-center mt-3 small-text">Already have an account? <a href="/auth/login" class="login-link">Login here</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

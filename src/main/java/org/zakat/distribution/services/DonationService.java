@@ -32,7 +32,7 @@ public class DonationService {
         List<Donation> donations = donationRepository.findByDonor(userService.getCurrentUser());
         return donations.stream()
                 .map(DonationDTO::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Transactional

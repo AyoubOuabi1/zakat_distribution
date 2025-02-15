@@ -1,9 +1,6 @@
 package org.zakat.distribution.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.zakat.distribution.entities.User;
-
 
 public class UserDTO {
     private Long id;
@@ -14,10 +11,12 @@ public class UserDTO {
     private String canton;
     private String postalCode;
     private String role;
+    private String newPassword; // Add this for new password
+    private String confirmNewPassword; // Add this for password confirmation
 
     public UserDTO() {}
 
-    public UserDTO(Long id, String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role) {
+    public UserDTO(Long id, String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role, String newPassword, String confirmNewPassword) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -26,6 +25,8 @@ public class UserDTO {
         this.canton = canton;
         this.postalCode = postalCode;
         this.role = role;
+        this.newPassword = newPassword;
+        this.confirmNewPassword = confirmNewPassword;
     }
 
     public static UserDTO fromEntity(User user) {
@@ -37,10 +38,11 @@ public class UserDTO {
                 user.getPhoneNumber(),
                 user.getCanton(),
                 user.getPostalCode(),
-                user.getRole().toString()
+                user.getRole().toString(),
+                null,
+                null
         );
     }
-
     public Long getId() {
         return id;
     }
@@ -104,5 +106,20 @@ public class UserDTO {
     public void setRole(String role) {
         this.role = role;
     }
-}
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getConfirmNewPassword() {
+        return confirmNewPassword;
+    }
+
+    public void setConfirmNewPassword(String confirmNewPassword) {
+        this.confirmNewPassword = confirmNewPassword;
+    }
+}

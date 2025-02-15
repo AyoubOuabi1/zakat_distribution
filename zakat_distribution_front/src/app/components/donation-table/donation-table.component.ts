@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import {DonationService} from "../services/donation/donation.service";
+import {DonationService} from "../../services/donation/donation.service";
 
 interface Donation {
   id?: number;
@@ -36,7 +36,6 @@ export class DonationTableComponent implements AfterViewInit, OnInit {
     }
   }
 
-  // Load donations from the backend
   loadDonations() {
     this.donationService.getDonations().subscribe((data) => {
       this.donations = data;
@@ -60,20 +59,49 @@ export class DonationTableComponent implements AfterViewInit, OnInit {
     if (this.isEditing && this.editingIndex !== null) {
       const id = this.donations[this.editingIndex].id!;
       this.donationService.updateDonation(id, this.selectedDonation).subscribe(() => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Your operation has been updated successfully.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          this.modal.hide();
+        });
         this.loadDonations();
       });
     } else {
       this.donationService.addDonation(this.selectedDonation).subscribe(() => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Your operation has been added successfully.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          this.modal.hide();
+        });
         this.loadDonations();
       });
     }
-    this.modal.hide();
   }
 
   deleteDonation(index: number) {
     const id = this.donations[index].id!;
-    this.donationService.deleteDonation(id).subscribe(() => {
-      this.loadDonations();
+    Swal.fire({
+      title: "Do you want to delete this item?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Dont't delete",
+      denyButtonText: `delete`
+    }).then((result: { isConfirmed: any; isDenied: any; }) => {
+      if (result.isConfirmed) {
+        Swal.fire("item are not deleted", "", "info");
+      } else if (result.isDenied) {
+        this.donationService.deleteDonation(id).subscribe(() => {
+          this.loadDonations();
+          Swal.fire("deleted!", "", "success");
+        });
+      }
     });
+
   }
 }

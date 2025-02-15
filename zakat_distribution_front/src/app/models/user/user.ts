@@ -7,5 +7,6 @@ export interface User {
   canton: string;
   postalCode: string;
   role: string;
+  newPassword?: string;
+  confirmNewPassword?: string;
 }
-

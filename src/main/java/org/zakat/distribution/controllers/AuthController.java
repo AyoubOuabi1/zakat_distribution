@@ -23,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtUtil;
@@ -37,14 +38,19 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registerDTO) {
         try {
             UserDTO createdUser = userService.registerUser(registerDTO);
-            return ResponseEntity.ok(createdUser);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "User successfully registered");
+            response.put("user", createdUser);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 
+
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, String>> loginUser(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDTO loginDTO) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword())
@@ -53,16 +59,11 @@ public class AuthController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String jwtToken = jwtUtil.generateToken(userDetails);
             String role = userService.getCurrentUser().getRole().toString();
-
-            Map<String, String> response = new HashMap<>();
-            response.put("token", jwtToken);
-            response.put("role", role);
-
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
+            LoginResponse loginResponse = new LoginResponse(jwtToken, role);
+            return ResponseEntity.ok(loginResponse);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Invalid credentials", null));
         }
     }
 
 }
-

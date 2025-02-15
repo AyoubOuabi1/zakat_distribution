@@ -30,7 +30,7 @@ public class UserService {
         List<User> users = userRepository.findAll();
         return users.stream()
                 .map(UserDTO::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
     public UserDTO registerUser(RegisterDTO registerDTO) {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
@@ -61,13 +61,17 @@ public class UserService {
     public UserDTO updateCurrentUser(UserDTO userDTO) {
         String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        // Find current user by email
         User currentUser = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Current user not found"));
+
+        // Validate email uniqueness
         if (!currentUser.getEmail().equals(userDTO.getEmail()) &&
                 userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new IllegalStateException("Email already exists");
         }
 
+        // Update user information (excluding password)
         currentUser.setFullName(userDTO.getFullName());
         currentUser.setEmail(userDTO.getEmail());
         currentUser.setAddress(userDTO.getAddress());
@@ -75,8 +79,23 @@ public class UserService {
         currentUser.setCanton(userDTO.getCanton());
         currentUser.setPostalCode(userDTO.getPostalCode());
         currentUser.setRole(Role.valueOf(userDTO.getRole()));
+
+        // If a new password is provided, validate and update it
+        if (userDTO.getNewPassword() != null && !userDTO.getNewPassword().isEmpty()) {
+            // Check if passwords match
+            if (!userDTO.getNewPassword().equals(userDTO.getConfirmNewPassword())) {
+                throw new IllegalStateException("Passwords do not match");
+            }
+
+            // Encode the password before saving
+            currentUser.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
+        }
+
+        // Save the updated user
         User updatedUser = userRepository.save(currentUser);
         return UserDTO.fromEntity(updatedUser);
     }
+
+
 }
 

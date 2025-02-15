@@ -48,7 +48,7 @@ public class DonationDTO {
         donation.setAmount(donationDTO.getAmount());
         donation.setPaymentMethod(PaymentMethod.valueOf(donationDTO.getPaymentMethod()));
         donation.setPaymentDetails(donationDTO.getPaymentDetails());
-        donation.setDate(LocalDate.now());
+        donation.setDate(donationDTO.getDate());
         donation.setDonor(donor);
         return donation;
     }
