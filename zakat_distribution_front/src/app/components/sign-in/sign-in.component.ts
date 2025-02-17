@@ -26,23 +26,13 @@ export class SignInComponent {
         this.router.navigate(['']);
       },
       (error) => {
-        this.loginError = 'Invalid credentials, please try again.';
+        Swal.fire({
+          title: 'Error!',
+          text: 'Invalid credentials, please try again.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
     );
-  }
-
-  togglePassword(inputId: string) {
-    const input = document.getElementById(inputId) as HTMLInputElement;
-    const eyeIcon = document.getElementById('eye-icon');
-
-    if (input.type === 'password') {
-      input.type = 'text';
-      eyeIcon?.classList.remove('fa-eye');
-      eyeIcon?.classList.add('fa-eye-slash');
-    } else {
-      input.type = 'password';
-      eyeIcon?.classList.remove('fa-eye-slash');
-      eyeIcon?.classList.add('fa-eye');
-    }
   }
 }

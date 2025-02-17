@@ -1,0 +1,21 @@
+#FROM node:18-alpine AS build
+#WORKDIR /app
+
+#COPY package*.json ./
+#RUN npm install
+#RUN npm install -g @angular/cli@16
+#COPY . .
+#RUN ng build --configuration=production
+
+#RUN npm install -g http-server
+#CMD ["http-server", "/app/dist/zakat_distribution_front", "-p", "4200"]
+FROM node:18 AS frontend-build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine AS frontend
+COPY --from=frontend-build /app/dist/* /usr/share/nginx/html/
+EXPOSE 4200
