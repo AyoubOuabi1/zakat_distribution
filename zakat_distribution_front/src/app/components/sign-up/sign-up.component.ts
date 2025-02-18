@@ -16,11 +16,14 @@ export class SignUpComponent {
     canton: '',
     postalCode: '',
     role: 'DONOR',
+    paymentMethod: 'TWINT',
+    bankTransferImage: null,
     password: '',
     confirmPassword: ''
   };
   registerError: string = '';
   passwordMismatch: boolean = false;
+  fileInputs: { [key: string]: File } = {};
 
   constructor(private registerService: AuthService, private router: Router) {}
 
@@ -31,7 +34,23 @@ export class SignUpComponent {
     }
     this.passwordMismatch = false;
 
-    this.registerService.register(this.user).subscribe(
+    const formData = new FormData();
+    formData.append('fullName', this.user.fullName);
+    formData.append('email', this.user.email);
+    formData.append('address', this.user.address);
+    formData.append('phoneNumber', this.user.phoneNumber);
+    formData.append('canton', this.user.canton);
+    formData.append('postalCode', this.user.postalCode);
+    formData.append('role', this.user.role);
+    formData.append('paymentMethod', this.user.paymentMethod);
+    formData.append('password', this.user.password);
+    formData.append('confirmPassword', this.user.confirmPassword);
+
+    if (this.user.bankTransferImage) {
+      formData.append('bankDetailsImage', this.fileInputs[this.user.bankTransferImage]);
+    }
+
+    this.registerService.register(formData).subscribe(
       (response) => {
         Swal.fire({
           title: 'Success!',
@@ -60,5 +79,17 @@ export class SignUpComponent {
 
   checkPasswordMatch() {
     this.passwordMismatch = this.user.password !== this.user.confirmPassword;
+  }
+
+  onRoleChange() {
+    this.user.paymentMethod = 'TWINT';
+    this.user.bankTransferImage = null;
+  }
+
+  onImageChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.user.bankTransferImage = file;
+    }
   }
 }

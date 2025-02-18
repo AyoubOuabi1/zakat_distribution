@@ -58,17 +58,32 @@
             </div>
           </div>
 
-           <div class="mb-3">
+          <div class="mb-3">
             <label for="role" class="form-label small-text">Role</label>
-            <select id="role" class="form-control form-control-sm" [(ngModel)]="user.role" name="role" required #role="ngModel">
-              <option value="DONOR">Donor</option>
-              <option value="RECEIVER">Receiver</option>
-            </select>
-            <div *ngIf="role?.invalid && role?.touched" class="text-danger">
-              Role is required.
+              <select id="role" class="form-control form-control-sm" [(ngModel)]="user.role" name="role" required #role="ngModel" (ngModelChange)="onRoleChange()">
+                <option value="DONOR">Donor</option>
+                <option value="RECEIVER">Receiver</option>
+              </select>
+              <div *ngIf="role?.invalid && role?.touched" class="text-danger">
+                Role is required.
+              </div>
+           </div>
+          <div *ngIf="user.role === 'RECEIVER'" class=" mb-3">
+            <label for="paymentMethod" class="form-label small-text">Payment Method</label>
+              <select id="paymentMethod" class="form-control form-control-sm" [(ngModel)]="user.paymentMethod" name="paymentMethod" required #paymentMethod="ngModel">
+                <option value="TWINT">Twint App</option>
+                <option value="BANK_TRANSFER">Bank Transfer</option>
+              </select>
+              <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="text-danger">
+                Payment method is required.
+              </div>
+          </div>
+          <div *ngIf="user.paymentMethod === 'BANK_TRANSFER'" class="row mb-3">
+            <div class="col-md-12 col-12">
+              <label for="bankTransferImage" class="form-label small-text">Upload Payment Image</label>
+              <input type="file" id="bankTransferImage" class="form-control form-control-sm" (change)="onImageChange($event)" accept="image/*">
             </div>
           </div>
-
            <div class="row mb-3">
             <div class="col-md-6 col-12">
               <label for="passwordReg" class="form-label small-text">Password</label>

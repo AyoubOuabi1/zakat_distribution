@@ -1,48 +1,16 @@
 package org.zakat.distribution.dtos;
 
+
 import org.zakat.distribution.entities.User;
+import org.zakat.distribution.entities.PaymentMethod;
+import org.zakat.distribution.entities.ReceiverDetails;
 
 public class UserDTO {
     private Long id;
     private String fullName;
     private String email;
     private String address;
-    private String phoneNumber;
-    private String canton;
-    private String postalCode;
-    private String role;
-    private String newPassword; // Add this for new password
-    private String confirmNewPassword; // Add this for password confirmation
 
-    public UserDTO() {}
-
-    public UserDTO(Long id, String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role, String newPassword, String confirmNewPassword) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.canton = canton;
-        this.postalCode = postalCode;
-        this.role = role;
-        this.newPassword = newPassword;
-        this.confirmNewPassword = confirmNewPassword;
-    }
-
-    public static UserDTO fromEntity(User user) {
-        return new UserDTO(
-                user.getId(),
-                user.getFullName(),
-                user.getEmail(),
-                user.getAddress(),
-                user.getPhoneNumber(),
-                user.getCanton(),
-                user.getPostalCode(),
-                user.getRole().toString(),
-                null,
-                null
-        );
-    }
     public Long getId() {
         return id;
     }
@@ -122,4 +90,64 @@ public class UserDTO {
     public void setConfirmNewPassword(String confirmNewPassword) {
         this.confirmNewPassword = confirmNewPassword;
     }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getBankDetailsImage() {
+        return bankDetailsImage;
+    }
+
+    public void setBankDetailsImage(String bankDetailsImage) {
+        this.bankDetailsImage = bankDetailsImage;
+    }
+
+    private String phoneNumber;
+    private String canton;
+    private String postalCode;
+    private String role;
+    private String newPassword;
+    private String confirmNewPassword;
+    private PaymentMethod paymentMethod;
+    private String bankDetailsImage;
+    public UserDTO() {}
+
+    public UserDTO(Long id, String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role, String newPassword, String confirmNewPassword, PaymentMethod paymentMethod, String bankDetailsImage) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.canton = canton;
+        this.postalCode = postalCode;
+        this.role = role;
+        this.newPassword = newPassword;
+        this.confirmNewPassword = confirmNewPassword;
+        this.paymentMethod = paymentMethod;
+        this.bankDetailsImage = bankDetailsImage;
+    }
+
+    public static UserDTO fromEntity(User user) {
+        ReceiverDetails receiverDetails = user.getReceiverDetails();
+        return new UserDTO(
+                user.getId(),
+                user.getFullName(),
+                user.getEmail(),
+                user.getAddress(),
+                user.getPhoneNumber(),
+                user.getCanton(),
+                user.getPostalCode(),
+                user.getRole().toString(),
+                null,
+                null,
+                receiverDetails != null ? receiverDetails.getPaymentMethod() : null,
+                receiverDetails != null ? receiverDetails.getBankDetailsImage() : null
+        );
+    }
+
 }

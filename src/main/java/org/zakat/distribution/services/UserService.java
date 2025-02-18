@@ -7,23 +7,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.zakat.distribution.dtos.RegisterDTO;
 import org.zakat.distribution.dtos.UserDTO;
+import org.zakat.distribution.entities.ReceiverDetails;
 import org.zakat.distribution.entities.Role;
 import org.zakat.distribution.entities.User;
 import org.zakat.distribution.exceptions.ResourceNotFoundException;
+import org.zakat.distribution.repositories.ReceiverDetailsRepository;
 import org.zakat.distribution.repositories.UserRepository;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final ReceiverDetailsRepository receiverDetailsRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, ReceiverDetailsRepository receiverDetailsRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.receiverDetailsRepository = receiverDetailsRepository;
         this.passwordEncoder = passwordEncoder;
     }
     public List<UserDTO> getAllUsers() {
@@ -33,16 +44,43 @@ public class UserService {
                 .toList();
     }
     public UserDTO registerUser(RegisterDTO registerDTO) {
+        validateRegistration(registerDTO);
+
+        User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
+        user = userRepository.save(user);
+
+        if (user.getRole() == Role.RECEIVER) {
+            ReceiverDetails receiverDetails = new ReceiverDetails();
+            receiverDetails.setUser(user);
+            receiverDetails.setPaymentMethod(registerDTO.getPaymentMethod());
+            if (registerDTO.getBankDetailsImage() != null && !registerDTO.getBankDetailsImage().isEmpty()) {
+                String fileName = UUID.randomUUID() + "_" + registerDTO.getBankDetailsImage().getOriginalFilename();
+                Path filePath = Paths.get("uploads/bank-details/" + fileName);
+                try {
+                    Files.createDirectories(filePath.getParent());
+                    Files.copy(registerDTO.getBankDetailsImage().getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                    receiverDetails.setBankDetailsImage(fileName);
+                } catch (IOException e) {
+                    throw new RuntimeException("Error saving bank details image", e);
+                }
+            }
+
+            receiverDetailsRepository.save(receiverDetails);
+        }
+
+        return UserDTO.fromEntity(user);
+    }
+
+
+    private void validateRegistration(RegisterDTO registerDTO) {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             throw new IllegalArgumentException("Email is already in use.");
         }
         if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
             throw new IllegalArgumentException("Passwords do not match.");
         }
-        User user = RegisterDTO.toEntity(registerDTO,passwordEncoder);
-        userRepository.save(user);
-        return UserDTO.fromEntity(user);
     }
+
 
     public UserDTO getUserByEmail(String email) {
         return UserDTO.fromEntity(userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found")));
@@ -87,11 +125,9 @@ public class UserService {
                 throw new IllegalStateException("Passwords do not match");
             }
 
-            // Encode the password before saving
             currentUser.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
         }
 
-        // Save the updated user
         User updatedUser = userRepository.save(currentUser);
         return UserDTO.fromEntity(updatedUser);
     }

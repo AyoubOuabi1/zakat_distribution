@@ -9,4 +9,6 @@ export interface User {
   role: string;
   newPassword?: string;
   confirmNewPassword?: string;
+  paymentMethod?: string;
+  bankDetailsImage?: string;
 }

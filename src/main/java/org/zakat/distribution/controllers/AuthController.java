@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.zakat.distribution.auth.JwtService;
 import org.zakat.distribution.dtos.LoginDTO;
 import org.zakat.distribution.dtos.LoginResponse;
@@ -17,6 +18,7 @@ import org.zakat.distribution.dtos.RegisterDTO;
 import org.zakat.distribution.dtos.UserDTO;
 import org.zakat.distribution.services.UserService;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +36,8 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registerDTO) {
+    @PostMapping(value = "/register")
+    public ResponseEntity<?> registerUser(@ModelAttribute RegisterDTO registerDTO) {
         try {
             UserDTO createdUser = userService.registerUser(registerDTO);
             Map<String, Object> response = new HashMap<>();
@@ -47,6 +49,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
 
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)

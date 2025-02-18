@@ -1,11 +1,14 @@
 package org.zakat.distribution.dtos;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 import org.zakat.distribution.entities.Role;
 import org.zakat.distribution.entities.User;
+import org.zakat.distribution.entities.ReceiverDetails;
+import org.zakat.distribution.entities.PaymentMethod;
+
 
 public class RegisterDTO {
     private String fullName;
@@ -18,9 +21,13 @@ public class RegisterDTO {
     private String password;
     private String confirmPassword;
 
+    // Receiver-specific fields
+    private PaymentMethod paymentMethod;
+    private MultipartFile bankDetailsImage;
+
     public RegisterDTO() {}
 
-    public RegisterDTO(String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role, String password, String confirmPassword) {
+    public RegisterDTO(String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role, String password, String confirmPassword, PaymentMethod paymentMethod, MultipartFile  bankDetailsImage) {
         this.fullName = fullName;
         this.email = email;
         this.address = address;
@@ -30,6 +37,8 @@ public class RegisterDTO {
         this.role = role;
         this.password = password;
         this.confirmPassword = confirmPassword;
+        this.paymentMethod = paymentMethod;
+        this.bankDetailsImage = bankDetailsImage;
     }
 
     public static User toEntity(RegisterDTO dto, PasswordEncoder passwordEncoder) {
@@ -42,6 +51,13 @@ public class RegisterDTO {
         user.setPostalCode(dto.getPostalCode());
         user.setRole(Role.valueOf(dto.getRole().toUpperCase()));
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (user.getRole() == Role.RECEIVER) {
+            ReceiverDetails receiverDetails = new ReceiverDetails();
+            receiverDetails.setUser(user);
+            receiverDetails.setPaymentMethod(dto.getPaymentMethod());
+            user.setReceiverDetails(receiverDetails);
+        }
+
         return user;
     }
 
@@ -116,6 +132,20 @@ public class RegisterDTO {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public MultipartFile getBankDetailsImage() {
+        return bankDetailsImage;
+    }
+
+    public void setBankDetailsImage(MultipartFile bankDetailsImage) {
+        this.bankDetailsImage = bankDetailsImage;
+    }
 }
-
-

@@ -24,13 +24,14 @@ export class AuthService {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('role');
   }
-
   isLoggedIn(): boolean {
     return localStorage.getItem('auth_token') !== null;
   }
+  register(user: FormData): Observable<any> {
 
-
-  register(userData: any): Observable<any> {
-    return this.http.post(this.apiRegisterUrl, userData);
+    return this.http.post(this.apiRegisterUrl, user)
   }
+
+
 }
+

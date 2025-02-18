@@ -14,7 +14,6 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String fullName;
     private String email;
     private String address;
@@ -31,7 +30,13 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ReceiverDetails receiverDetails;
 
+    public void setReceiverDetails(ReceiverDetails receiverDetails) {
+        this.receiverDetails = receiverDetails;
+        receiverDetails.setUser(this);
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
@@ -150,6 +155,10 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public ReceiverDetails getReceiverDetails() {
+        return receiverDetails;
     }
 }
 
