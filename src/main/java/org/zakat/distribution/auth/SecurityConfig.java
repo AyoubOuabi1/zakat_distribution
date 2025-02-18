@@ -33,17 +33,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Ensure CORS is applied
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/auth/**")
-                                .permitAll()
+                        req.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                                .requestMatchers("/api/user/**").hasAnyRole("DONOR","ADMIN","RECEIVER")
-                                .requestMatchers("/api/donation/**").hasAnyRole("DONOR","ADMIN")
-                                .requestMatchers("/api/zakat/**").hasAnyRole("ADMIN","RECEIVER")
-                                .anyRequest()
-                                .authenticated()
+                                .requestMatchers("/api/user/**").hasAnyRole("DONOR", "ADMIN", "RECEIVER")
+                                .requestMatchers("/api/donation/**").hasAnyRole("DONOR", "ADMIN")
+                                .requestMatchers("/api/zakat/**").hasAnyRole("ADMIN", "RECEIVER")
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -52,11 +50,12 @@ public class SecurityConfig {
         return http.build();
     }
 
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost","http://31.15.14.12"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedOrigins(List.of("http://localhost", "http://37.148.202.12/"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(List.of("Authorization"));
@@ -65,4 +64,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }
