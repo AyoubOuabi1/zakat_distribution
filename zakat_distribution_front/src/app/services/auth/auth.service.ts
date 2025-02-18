@@ -8,7 +8,7 @@ import {environment} from "../../environment";
 })
 export class AuthService {
   private apiLoginUrl = `${environment.apiUrl}/auth/login`;
-  private apiRegisterUrl = `${environment.apiUrl}/api/auth/register`;
+  private apiRegisterUrl = `${environment.apiUrl}/auth/register`;
 
   constructor(private http: HttpClient) {}
 
