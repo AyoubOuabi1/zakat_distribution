@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Receive} from "../../models/receive/receive";
+import {environment} from "../../environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReceiveHistoryService {
-  private apiUrl = 'http://localhost:9955/api/zakat';
+  private apiUrl = `${environment.apiUrl}/zakat`;
 
   constructor(private http: HttpClient) {}
 

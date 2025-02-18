@@ -18,4 +18,4 @@ spring:
 jwt:
   secret_key : +jig8CUe374HVXEDiChIyg0TCaCgbqMhVEA2nmelSZWWMcHAipNTxMZicxsBaHBJg+VSdWacw0QI1l2gPrIkl/ChnxgDhwDCAqPD1IGP+cfKi8r8xzpRGSikvjU+J2q6aGeaN5p0JPgn8y/Z/+2ywqqGfAhcSCtMQOPBAfvjkG4YI+68pxqm4BvlIN8VGdXlgONv8R1P0EmAw+qBidJaEBBmd17x0cUCNYBnMvjMuyQOchvkiE2xEv6bYDxTtdxXJXxrPPwL8L7T1LffmQPpGsXNqItxjCq675jZ93C5odNSjpc25ET0GGoYOM4jiUPkQ4faQVZDI0zt37tdoWwPM8Y6XJwmhqvbVH+U0FLoAbc=
 server:
-  port: 9955
+  port: 8080
