@@ -7,7 +7,7 @@ import {Receive} from "../../models/receive/receive";
   providedIn: 'root'
 })
 export class ReceiveHistoryService {
-  private apiUrl = 'http://localhost:9950/api/zakat';
+  private apiUrl = 'http://localhost:9955/api/zakat';
 
   constructor(private http: HttpClient) {}
 

@@ -11,6 +11,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - app-network
+
 
   backend:
     build:
@@ -24,25 +27,23 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
     ports:
       - "9955:9955"
+    networks:
+      - app-network
 
   frontend:
     build:
       context: ./zakat_distribution_front
       dockerfile: Dockerfile-frontend
     ports:
-      - "4200:80"
-    depends_on:
-      - backend
-
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    ports:
       - "80:80"
+    networks:
+      - app-network
     depends_on:
-      - frontend
       - backend
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
