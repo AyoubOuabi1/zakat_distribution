@@ -31,7 +31,7 @@ public class UserDTO {
     private String canton;
 
     @NotBlank(message = "Postal code is required")
-    @Pattern(regexp = "^[0-9]{4}$", message = "Please provide a valid  postal code")
+    @Pattern(regexp = "^[0-9]{4,10}$", message = "Please provide a valid  postal code")
     private String postalCode;
 
     @NotBlank(message = "Role is required")

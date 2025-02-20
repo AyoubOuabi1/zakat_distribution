@@ -1,6 +1,7 @@
 package org.zakat.distribution.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.zakat.distribution.entities.User;
 
@@ -18,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "GROUP BY u.id")
     List<Object[]> findAllUsersWithTotals();
     boolean existsByEmail(String email);
+    @Modifying
+    @Query("UPDATE User u SET u.id = u.id WHERE u.id = :id")
+    void detach(User user);
 }

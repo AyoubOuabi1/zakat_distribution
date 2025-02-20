@@ -102,7 +102,6 @@ export class SignUpComponent {
     }
   }
 
-  // Helper method to check if a field has a validation error
   hasError(field: string): boolean {
     return !!this.validationErrors[field];
   }

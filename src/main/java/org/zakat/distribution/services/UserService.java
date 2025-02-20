@@ -48,9 +48,9 @@ public class UserService {
     @Transactional
     public void registerUser(RegisterDTO registerDTO) {
         validateRegistration(registerDTO);
-
-        User user = saveNewUser(registerDTO);
-
+        User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
+        userRepository.detach(user);
+        user = userRepository.save(user);
         if (user.getRole() == Role.RECEIVER) {
             saveReceiverDetails(user, registerDTO);
         }
