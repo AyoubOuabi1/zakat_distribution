@@ -23,17 +23,19 @@ export class SignUpComponent {
   };
   registerError: string = '';
   passwordMismatch: boolean = false;
-  fileInputs: { [key: string]: File } = {};
+  validationErrors: { [key: string]: string } = {}; // To store backend validation errors
 
   constructor(private registerService: AuthService, private router: Router) {}
 
   onRegister() {
+    // Check if passwords match
     if (this.user.password !== this.user.confirmPassword) {
       this.passwordMismatch = true;
       return;
     }
     this.passwordMismatch = false;
 
+    // Create FormData for the request
     const formData = new FormData();
     formData.append('fullName', this.user.fullName);
     formData.append('email', this.user.email);
@@ -50,6 +52,7 @@ export class SignUpComponent {
       formData.append('bankDetailsImage', this.user.bankTransferImage);
     }
 
+    // Call the registration service
     this.registerService.register(formData).subscribe(
       (response) => {
         Swal.fire({
@@ -62,13 +65,19 @@ export class SignUpComponent {
         });
       },
       (error) => {
-        this.registerError = 'Registration failed. Please try again later.';
-        Swal.fire({
-          title: 'Error!',
-          text: this.registerError,
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
+        if (error.error && error.error.details) {
+          // Backend validation errors
+          this.validationErrors = error.error.details;
+        } else {
+          // Generic error message
+          this.registerError = error.error?.error || 'Registration failed. Please try again later.';
+          Swal.fire({
+            title: 'Error!',
+            text: this.registerError,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
       }
     );
   }
@@ -91,5 +100,14 @@ export class SignUpComponent {
     if (file) {
       this.user.bankTransferImage = file;
     }
+  }
+
+  // Helper method to check if a field has a validation error
+  hasError(field: string): boolean {
+    return !!this.validationErrors[field];
+  }
+
+  getError(field: string): string {
+    return this.validationErrors[field] || '';
   }
 }

@@ -1,5 +1,6 @@
 package org.zakat.distribution.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.zakat.distribution.auth.JwtService;
@@ -37,13 +40,23 @@ public class AuthController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> registerUser(@ModelAttribute RegisterDTO registerDTO) {
-        try {
-            userService.registerUser(registerDTO);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "User successfully registered");
+    public ResponseEntity<?> registerUser(
+            @Valid @ModelAttribute RegisterDTO registerDTO,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(Map.of("error", "Validation failed", "details", errors));
+        }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        try {
+            registerDTO.validateReceiverFields();
+            registerDTO.validatePasswordMatch();
+            registerDTO.validateBankDetailsImage();
+            userService.registerUser(registerDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "User successfully registered"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

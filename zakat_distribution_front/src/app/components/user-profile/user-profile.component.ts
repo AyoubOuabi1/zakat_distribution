@@ -19,13 +19,16 @@ export class UserProfileComponent implements OnInit {
     postalCode: '',
     role: '',
     paymentMethod: '',
-    bankDetailsImage: '',
+    bankDetailsImage: null,
     newPassword: '',
-    confirmNewPassword: ''
+    confirmNewPassword: '',
+    totalReceived: 0,
+    totalDonated: 0
   };
-  role: string | null | undefined;
+  role: string | null = null;
   passwordMismatch: boolean = false;
   selectedFile: File | null = null;
+  validationErrors: { [key: string]: string } = {};
 
   constructor(private userService: UserService) {}
 
@@ -35,14 +38,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    this.userService.getUserProfile().subscribe(
-      (data: User) => {
+    this.userService.getUserProfile().subscribe({
+      next: (data: User) => {
         this.user = data;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching user profile', error);
       }
-    );
+    });
   }
 
   checkPasswordMatch(): void {
@@ -50,15 +53,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Check if passwords match
     if (this.user.newPassword && this.user.newPassword !== this.user.confirmNewPassword) {
       this.passwordMismatch = true;
       return;
     }
-
-    if (this.user.paymentMethod == 'TWINT') {
-      this.user.bankDetailsImage = null;
-      this.selectedFile = null;
-    }
+    this.passwordMismatch = false;
 
     const formData = new FormData();
     formData.append('userDTO', new Blob([JSON.stringify(this.user)], { type: 'application/json' }));
@@ -67,8 +67,9 @@ export class UserProfileComponent implements OnInit {
       formData.append('bankDetailsImage', this.selectedFile);
     }
 
-    this.userService.updateUserProfile(formData).subscribe(
-      (data: User) => {
+    // Call the update profile service
+    this.userService.updateUserProfile(formData).subscribe({
+      next: (data: User) => {
         Swal.fire({
           title: 'Success!',
           text: 'Your data has been updated successfully.',
@@ -79,33 +80,56 @@ export class UserProfileComponent implements OnInit {
           this.user.confirmNewPassword = '';
         });
       },
-      (error) => {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Error updating your data',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
+      error: (error) => {
+        if (error.error && error.error.details) {
+          this.validationErrors = error.error.details;
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: error.error?.error || 'Error updating your data',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
       }
-    );
+    });
   }
 
-  onImageChange(event: any) {
-    this.selectedFile = event.target.files[0];
+  onImageChange(event: any): void {
+    if (event.target.files && event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
   }
 
-  getImageUrl(imageName: string): string {
+  getImageUrl(imageName: string | null): string {
+    if (!imageName) return '';
     const baseUrl = `${environment.apiUrl}/uploads/bank-details/`;
     return `${baseUrl}${imageName}`;
   }
 
-  onRoleChange() {
-    var paymentMethod=this.user.paymentMethod;
-    console.log(this.user.paymentMethod)
-    if (paymentMethod === 'TWINT') {
-      this.user.bankDetailsImage = null;
-      this.selectedFile = null;
+  onPaymentMethodChange(): void {
+    if (this.user.paymentMethod === 'TWINT') {
+      this.clearBankDetails();
     }
   }
 
+  onRoleChange(): void {
+    if (this.user.role === 'DONOR') {
+      this.clearBankDetails();
+      this.user.paymentMethod = null;
+    }
+  }
+
+  private clearBankDetails(): void {
+    this.user.bankDetailsImage = null;
+    this.selectedFile = null;
+  }
+
+  hasError(field: string): boolean {
+    return !!this.validationErrors[field];
+  }
+
+  getError(field: string): string {
+    return this.validationErrors[field] || '';
+  }
 }

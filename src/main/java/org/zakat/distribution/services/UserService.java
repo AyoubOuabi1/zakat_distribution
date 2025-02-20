@@ -1,20 +1,14 @@
 package org.zakat.distribution.services;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.zakat.distribution.dtos.RegisterDTO;
 import org.zakat.distribution.dtos.UserDTO;
-import org.zakat.distribution.entities.PaymentMethod;
-import org.zakat.distribution.entities.ReceiverDetails;
-import org.zakat.distribution.entities.Role;
-import org.zakat.distribution.entities.User;
+import org.zakat.distribution.entities.*;
 import org.zakat.distribution.exceptions.ResourceNotFoundException;
 import org.zakat.distribution.repositories.ReceiverDetailsRepository;
 import org.zakat.distribution.repositories.UserRepository;
@@ -25,11 +19,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private static final String UPLOAD_DIR = "src/main/resources/uploads/bank-details/";
+
     private final UserRepository userRepository;
     private final ReceiverDetailsRepository receiverDetailsRepository;
     private final PasswordEncoder passwordEncoder;
@@ -39,50 +35,57 @@ public class UserService {
         this.receiverDetailsRepository = receiverDetailsRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     public List<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream()
-                .map(UserDTO::fromEntity)
+        return userRepository.findAllUsersWithTotals().stream()
+                .map(result -> UserDTO.fromEntity(
+                        (User) result[0],
+                        (Double) result[1],
+                        (Double) result[2]))
                 .toList();
     }
-    public UserDTO registerUser(RegisterDTO registerDTO) {
-        validateRegistration(registerDTO);
-        User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
-        user = userRepository.save(user);
-        if (user.getRole() == Role.RECEIVER) {
-            ReceiverDetails receiverDetails = receiverDetailsRepository.findById(user.getId())
-                    .orElse(new ReceiverDetails());
-            receiverDetails.setPaymentMethod(registerDTO.getPaymentMethod());
-            if (registerDTO.getBankDetailsImage() != null && !registerDTO.getBankDetailsImage().isEmpty()) {
-                String resourcesDir = "src/main/resources/uploads/bank-details/";
-                Path uploadDir = Paths.get(resourcesDir);
 
-                if (!Files.exists(uploadDir)) {
-                    try {
-                        Files.createDirectories(uploadDir);
-                    } catch (IOException e) {
-                        throw new RuntimeException("Failed to create upload directory", e);
-                    }
-                }
-                String fileName = UUID.randomUUID()+ "_" + registerDTO.getBankDetailsImage().getOriginalFilename();
-                Path filePath = uploadDir.resolve(fileName);
-                if (!Files.exists(filePath)) {
-                    try {
-                        Files.copy(registerDTO.getBankDetailsImage().getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-                        receiverDetails.setBankDetailsImage(fileName);
-                    } catch (IOException e) {
-                        throw new RuntimeException("Error saving bank details image", e);
-                    }
-                } else {
-                    receiverDetails.setBankDetailsImage(filePath.getFileName().toString());
-                }
-            }
-            receiverDetails.setUser(user);
-            receiverDetailsRepository.save(receiverDetails);
+    @Transactional
+    public void registerUser(RegisterDTO registerDTO) {
+        validateRegistration(registerDTO);
+
+        User user = saveNewUser(registerDTO);
+
+        if (user.getRole() == Role.RECEIVER) {
+            saveReceiverDetails(user, registerDTO);
+        }
+    }
+
+    @Transactional
+    public UserDTO updateCurrentUser(UserDTO userDTO, MultipartFile bankDetailsImage) {
+        User currentUser = getCurrentUserFromContext();
+        validateEmailUpdate(currentUser, userDTO.getEmail());
+
+        updateUserBasicInfo(currentUser, userDTO);
+        updatePasswordIfProvided(currentUser, userDTO);
+
+        if (currentUser.getRole() == Role.RECEIVER) {
+            updateReceiverDetails(currentUser, userDTO, bankDetailsImage);
         }
 
-        return UserDTO.fromEntity(user);
+        User updatedUser = userRepository.save(currentUser);
+        return createUserDTOWithTotals(updatedUser);
     }
+
+    public User getCurrentUser() {
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .map(auth -> {
+                    if (auth.getPrincipal() instanceof UserDetails) {
+                        String username = ((UserDetails) auth.getPrincipal()).getUsername();
+                        return userRepository.findByEmail(username)
+                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                    }
+                    return null;
+                })
+                .orElse(null);
+    }
+
+    // Private helper methods
     private void validateRegistration(RegisterDTO registerDTO) {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             throw new IllegalArgumentException("Email is already in use.");
@@ -92,72 +95,100 @@ public class UserService {
         }
     }
 
-
-    public UserDTO getUserByEmail(String email) {
-        return UserDTO.fromEntity(userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found")));
+    private User saveNewUser(RegisterDTO registerDTO) {
+        User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
+        return userRepository.save(user);
     }
-    public User getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails)principal).getUsername();
-            return userRepository.findByEmail(username).get();
+    private void saveReceiverDetails(User user, RegisterDTO registerDTO) {
+        ReceiverDetails receiverDetails = new ReceiverDetails();
+        receiverDetails.setUser(user);
+        receiverDetails.setPaymentMethod(registerDTO.getPaymentMethod());
+
+        if (registerDTO.getBankDetailsImage() != null && !registerDTO.getBankDetailsImage().isEmpty()) {
+            String fileName = saveImageFile(registerDTO.getBankDetailsImage());
+            receiverDetails.setBankDetailsImage(fileName);
         }
 
-        return null;
+        receiverDetailsRepository.save(receiverDetails);
     }
-    @Transactional
-    public UserDTO updateCurrentUser(UserDTO userDTO, MultipartFile bankDetailsImage) throws IOException {
-        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.findByEmail(currentUserEmail)
-                .orElseThrow(() -> new ResourceNotFoundException("Current user not found"));
 
-        // Check if the new email is already taken
-        if (!currentUser.getEmail().equals(userDTO.getEmail()) &&
-                userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+    private String saveImageFile(MultipartFile imageFile) {
+        try {
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+            Files.createDirectories(uploadPath);
+
+            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+            Path filePath = uploadPath.resolve(fileName);
+
+            Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            return fileName;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save image file", e);
+        }
+    }
+
+    private User getCurrentUserFromContext() {
+        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("Current user not found"));
+    }
+
+    private void validateEmailUpdate(User currentUser, String newEmail) {
+        if (!currentUser.getEmail().equals(newEmail) &&
+                userRepository.findByEmail(newEmail).isPresent()) {
             throw new IllegalStateException("Email already exists");
         }
+    }
 
-        currentUser.setFullName(userDTO.getFullName());
-        currentUser.setEmail(userDTO.getEmail());
-        currentUser.setAddress(userDTO.getAddress());
-        currentUser.setPhoneNumber(userDTO.getPhoneNumber());
-        currentUser.setCanton(userDTO.getCanton());
-        currentUser.setPostalCode(userDTO.getPostalCode());
-        currentUser.setRole(Role.valueOf(userDTO.getRole()));
+    private void updateUserBasicInfo(User user, UserDTO userDTO) {
+        user.setFullName(userDTO.getFullName());
+        user.setEmail(userDTO.getEmail());
+        user.setAddress(userDTO.getAddress());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setCanton(userDTO.getCanton());
+        user.setPostalCode(userDTO.getPostalCode());
+        user.setRole(Role.valueOf(userDTO.getRole()));
+    }
 
+    private void updatePasswordIfProvided(User user, UserDTO userDTO) {
         if (userDTO.getNewPassword() != null && !userDTO.getNewPassword().isEmpty()) {
             if (!userDTO.getNewPassword().equals(userDTO.getConfirmNewPassword())) {
                 throw new IllegalStateException("Passwords do not match");
             }
-            currentUser.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
+            user.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
         }
-
-        if (currentUser.getRole() == Role.RECEIVER && bankDetailsImage != null && !bankDetailsImage.isEmpty()) {
-            String fileName = UUID.randomUUID() + "_" + bankDetailsImage.getOriginalFilename();
-            String resourcesDir = "src/main/resources/uploads/bank-details/"+fileName;
-            Path filePath = Paths.get(resourcesDir);
-            try {
-                Files.createDirectories(filePath.getParent());
-                Files.copy(bankDetailsImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                ReceiverDetails receiverDetails = currentUser.getReceiverDetails();
-                if (receiverDetails == null) {
-                    receiverDetails = new ReceiverDetails();
-                    receiverDetails.setUser(currentUser);
-                }
-                receiverDetails.setPaymentMethod(PaymentMethod.valueOf(userDTO.getPaymentMethod().name()));
-                receiverDetails.setBankDetailsImage(fileName);
-                receiverDetailsRepository.save(receiverDetails);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to save bank details image", e);
-            }
-        }
-
-        User updatedUser = userRepository.save(currentUser);
-        return UserDTO.fromEntity(updatedUser);
     }
 
+    private void updateReceiverDetails(User user, UserDTO userDTO, MultipartFile bankDetailsImage) {
+        ReceiverDetails receiverDetails = user.getReceiverDetails();
+        if (receiverDetails == null) {
+            receiverDetails = new ReceiverDetails();
+            receiverDetails.setUser(user);
+        }
 
+        PaymentMethod paymentMethod = PaymentMethod.valueOf(userDTO.getPaymentMethod().name());
+        receiverDetails.setPaymentMethod(paymentMethod);
+
+        if (paymentMethod == PaymentMethod.TWINT) {
+            receiverDetails.setBankDetailsImage(null);
+        } else if (bankDetailsImage != null && !bankDetailsImage.isEmpty()) {
+            String fileName = saveImageFile(bankDetailsImage);
+            receiverDetails.setBankDetailsImage(fileName);
+        }
+
+        receiverDetailsRepository.save(receiverDetails);
+    }
+
+    private UserDTO createUserDTOWithTotals(User user) {
+        Double totalDonated = user.getDonationsHistory().stream()
+                .mapToDouble(Donation::getAmount)
+                .sum();
+
+        Double totalReceived = user.getZakatHistory().stream()
+                .mapToDouble(Zakat::getAmountReceived)
+                .sum();
+
+        return UserDTO.fromEntity(user, totalDonated, totalReceived);
+    }
 }
-

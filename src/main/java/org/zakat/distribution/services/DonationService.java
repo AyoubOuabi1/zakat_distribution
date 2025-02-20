@@ -6,9 +6,7 @@ import org.zakat.distribution.entities.Donation;
 import org.zakat.distribution.entities.PaymentMethod;
 import org.zakat.distribution.repositories.DonationRepository;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service

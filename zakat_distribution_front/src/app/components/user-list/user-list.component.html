@@ -7,16 +7,29 @@
             <h4 class="mb-0 fs-5">Users List</h4>
           </div>
           <div class="card-body p-3">
-            <!-- Role Filter -->
             <div class="mb-3">
               <label for="roleFilter" class="form-label"><strong>Filter by Role:</strong></label>
-              <select id="roleFilter" class="form-select" [(ngModel)]="selectedRole" (change)="applyFilter()">
+              <select id="roleFilter" class="form-select" [(ngModel)]="selectedRole" (change)="applyFilters()">
                 <option value="ALL">All</option>
                 <option value="DONOR">Donor</option>
                 <option value="RECEIVER">Receiver</option>
               </select>
             </div>
-
+            <div class="mb-3">
+              <label for="searchInput" class="form-label"><strong>Search:</strong></label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="searchInput"
+                  class="form-control"
+                  placeholder="Search by name, email, canton, or phone"
+                  [(ngModel)]="searchTerm"
+                  (input)="onSearch($event)">
+                <span class="input-group-text">
+                  <i class="bi bi-search"></i>
+               </span>
+              </div>
+            </div>
             <!-- Show message if no users -->
             <div *ngIf="filteredUsers.length === 0" class="alert alert-warning text-center">
               No users found.
@@ -75,6 +88,12 @@
         <p><strong>Phone:</strong> {{ selectedUser?.phoneNumber }}</p>
         <p><strong>Canton:</strong> {{ selectedUser?.canton }}</p>
         <p><strong>Postal Code:</strong> {{ selectedUser?.postalCode }}</p>
+        <p *ngIf="selectedUser.role=='DONOR'"><strong>total Donated :</strong> {{ selectedUser?.totalDonated | currency}}</p>
+        <p *ngIf="selectedUser.role=='RECEIVER'"><strong>total Received:</strong> {{ selectedUser?.totalReceived | currency }}</p>
+        <p *ngIf="selectedUser.role=='RECEIVER'"><strong>Payment Method:</strong> {{ selectedUser?.paymentMethod }}</p>
+        <div *ngIf="selectedUser.role=='RECEIVER'" class="mt-2">
+          <img *ngIf="selectedUser.paymentMethod!='TWINT'" [src]="getImageUrl(selectedUser.bankDetailsImage)" alt="Bank Details Image" class="img-thumbnail" style="max-width: 200px; max-height: 200px">
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" (click)="closeModal()">Close</button>

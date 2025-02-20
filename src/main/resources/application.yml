@@ -2,9 +2,14 @@
 spring:
   application:
     name: zakat distribution
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 10MB
+      max-file-size: 2MB
   datasource:
     url: jdbc:postgresql://localhost:5432/zakat_db
-    username: zakat_user
+    username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
   jpa:

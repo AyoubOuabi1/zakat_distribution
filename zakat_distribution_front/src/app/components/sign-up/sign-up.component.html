@@ -7,12 +7,16 @@
         <!-- Register Form -->
         <form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
 
-           <div class="row mb-3">
+          <!-- Full Name -->
+          <div class="row mb-3">
             <div class="col-md-6 col-12">
               <label for="fullName" class="form-label small-text">Full Name</label>
               <input type="text" id="fullName" class="form-control form-control-sm" [(ngModel)]="user.fullName" name="fullName" placeholder="Enter your full name" required #fullName="ngModel">
               <div *ngIf="fullName?.invalid && fullName?.touched" class="text-danger">
                 Full Name is required.
+              </div>
+              <div *ngIf="hasError('fullName')" class="text-danger">
+                {{ getError('fullName') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
@@ -21,15 +25,22 @@
               <div *ngIf="email?.invalid && email?.touched" class="text-danger">
                 Email is required and must be valid.
               </div>
+              <div *ngIf="hasError('email')" class="text-danger">
+                {{ getError('email') }}
+              </div>
             </div>
           </div>
 
-           <div class="row mb-3">
+          <!-- Address and Phone Number -->
+          <div class="row mb-3">
             <div class="col-md-6 col-12">
               <label for="address" class="form-label small-text">Address</label>
               <input type="text" id="address" class="form-control form-control-sm" [(ngModel)]="user.address" name="address" placeholder="Enter your address" required #address="ngModel">
               <div *ngIf="address?.invalid && address?.touched" class="text-danger">
                 Address is required.
+              </div>
+              <div *ngIf="hasError('address')" class="text-danger">
+                {{ getError('address') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
@@ -38,15 +49,22 @@
               <div *ngIf="phoneNumber?.invalid && phoneNumber?.touched" class="text-danger">
                 Phone Number is required.
               </div>
+              <div *ngIf="hasError('phoneNumber')" class="text-danger">
+                {{ getError('phoneNumber') }}
+              </div>
             </div>
           </div>
 
-           <div class="row mb-3">
+          <!-- Canton and Postal Code -->
+          <div class="row mb-3">
             <div class="col-md-6 col-12">
               <label for="canton" class="form-label small-text">Canton</label>
               <input type="text" id="canton" class="form-control form-control-sm" [(ngModel)]="user.canton" name="canton" placeholder="Enter canton" required #canton="ngModel">
               <div *ngIf="canton?.invalid && canton?.touched" class="text-danger">
                 Canton is required.
+              </div>
+              <div *ngIf="hasError('canton')" class="text-danger">
+                {{ getError('canton') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
@@ -55,41 +73,63 @@
               <div *ngIf="postalCode?.invalid && postalCode?.touched" class="text-danger">
                 Postal Code is required.
               </div>
+              <div *ngIf="hasError('postalCode')" class="text-danger">
+                {{ getError('postalCode') }}
+              </div>
             </div>
           </div>
 
+          <!-- Role -->
           <div class="mb-3">
             <label for="role" class="form-label small-text">Role</label>
-              <select id="role" class="form-control form-control-sm" [(ngModel)]="user.role" name="role" required #role="ngModel" (ngModelChange)="onRoleChange()">
-                <option value="DONOR">Donor</option>
-                <option value="RECEIVER">Receiver</option>
-              </select>
-              <div *ngIf="role?.invalid && role?.touched" class="text-danger">
-                Role is required.
-              </div>
-           </div>
-          <div *ngIf="user.role === 'RECEIVER'" class=" mb-3">
-            <label for="paymentMethod" class="form-label small-text">Payment Method</label>
-              <select id="paymentMethod" class="form-control form-control-sm" [(ngModel)]="user.paymentMethod" name="paymentMethod" required #paymentMethod="ngModel">
-                <option value="TWINT">Twint App</option>
-                <option value="BANK_TRANSFER">Bank Transfer</option>
-              </select>
-              <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="text-danger">
-                Payment method is required.
-              </div>
+            <select id="role" class="form-control form-control-sm" [(ngModel)]="user.role" name="role" required #role="ngModel" (ngModelChange)="onRoleChange()">
+              <option value="DONOR">Donor</option>
+              <option value="RECEIVER">Receiver</option>
+            </select>
+            <div *ngIf="role?.invalid && role?.touched" class="text-danger">
+              Role is required.
+            </div>
+            <div *ngIf="hasError('role')" class="text-danger">
+              {{ getError('role') }}
+            </div>
           </div>
+
+          <!-- Payment Method (for Receivers) -->
+          <div *ngIf="user.role === 'RECEIVER'" class="mb-3">
+            <label for="paymentMethod" class="form-label small-text">Payment Method</label>
+            <select id="paymentMethod" class="form-control form-control-sm" [(ngModel)]="user.paymentMethod" name="paymentMethod" required #paymentMethod="ngModel">
+              <option value="TWINT">Twint App</option>
+              <option value="BANK_TRANSFER">Bank Transfer</option>
+            </select>
+            <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="text-danger">
+              Payment method is required.
+            </div>
+            <div *ngIf="hasError('paymentMethod')" class="text-danger">
+              {{ getError('paymentMethod') }}
+            </div>
+          </div>
+
+          <!-- Bank Transfer Image (for Bank Transfer) -->
           <div *ngIf="user.paymentMethod === 'BANK_TRANSFER'" class="row mb-3">
             <div class="col-md-12 col-12">
               <label for="bankTransferImage" class="form-label small-text">Upload Payment Image</label>
               <input type="file" id="bankTransferImage" class="form-control form-control-sm" (change)="onImageChange($event)" accept="image/*">
+              <div *ngIf="hasError('bankDetailsImage')" class="text-danger">
+                {{ getError('bankDetailsImage') }}
+              </div>
             </div>
           </div>
-           <div class="row mb-3">
+
+          <!-- Password and Confirm Password -->
+          <div class="row mb-3">
             <div class="col-md-6 col-12">
               <label for="passwordReg" class="form-label small-text">Password</label>
               <input type="password" id="passwordReg" class="form-control form-control-sm" [(ngModel)]="user.password" name="password" placeholder="Enter your password" required #password="ngModel" minlength="8" pattern="^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$">
               <div *ngIf="password?.invalid && password?.touched" class="text-danger">
                 Password must be at least 8 characters long and contain both letters and numbers.
+              </div>
+              <div *ngIf="hasError('password')" class="text-danger">
+                {{ getError('password') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
@@ -98,11 +138,16 @@
               <div *ngIf="passwordMismatch" class="text-danger">
                 Passwords do not match!
               </div>
+              <div *ngIf="hasError('confirmPassword')" class="text-danger">
+                {{ getError('confirmPassword') }}
+              </div>
             </div>
           </div>
 
-           <button type="submit" class="btn btn-primary w-100 btn-sm" [disabled]="passwordMismatch || !signUpForm.valid">Sign Up</button>
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary w-100 btn-sm" [disabled]="passwordMismatch || !signUpForm.valid">Sign Up</button>
 
+          <!-- Login Link -->
           <p class="text-center mt-3 small-text">Already have an account? <a href="/auth/login" class="login-link">Login here</a></p>
         </form>
       </div>
