@@ -1,5 +1,7 @@
 package org.zakat.distribution.services;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +31,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final ReceiverDetailsRepository receiverDetailsRepository;
     private final PasswordEncoder passwordEncoder;
-
+    @PersistenceContext
+    private EntityManager entityManager;
     public UserService(UserRepository userRepository, ReceiverDetailsRepository receiverDetailsRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.receiverDetailsRepository = receiverDetailsRepository;
@@ -49,7 +52,7 @@ public class UserService {
     public void registerUser(RegisterDTO registerDTO) {
         validateRegistration(registerDTO);
         User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
-        userRepository.detach(user);
+        entityManager.detach(user);
         user = userRepository.save(user);
         if (user.getRole() == Role.RECEIVER) {
             saveReceiverDetails(user, registerDTO);
