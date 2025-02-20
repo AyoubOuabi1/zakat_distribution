@@ -2,6 +2,7 @@ package org.zakat.distribution.services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.zakat.distribution.dtos.RegisterDTO;
 import org.zakat.distribution.dtos.UserDTO;
+import org.zakat.distribution.entities.PaymentMethod;
 import org.zakat.distribution.entities.ReceiverDetails;
 import org.zakat.distribution.entities.Role;
 import org.zakat.distribution.entities.User;
@@ -105,20 +107,17 @@ public class UserService {
         return null;
     }
     @Transactional
-    public UserDTO updateCurrentUser(UserDTO userDTO) {
+    public UserDTO updateCurrentUser(UserDTO userDTO, MultipartFile bankDetailsImage) throws IOException {
         String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        // Find current user by email
         User currentUser = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Current user not found"));
 
-        // Validate email uniqueness
+        // Check if the new email is already taken
         if (!currentUser.getEmail().equals(userDTO.getEmail()) &&
                 userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new IllegalStateException("Email already exists");
         }
 
-        // Update user information (excluding password)
         currentUser.setFullName(userDTO.getFullName());
         currentUser.setEmail(userDTO.getEmail());
         currentUser.setAddress(userDTO.getAddress());
@@ -127,14 +126,32 @@ public class UserService {
         currentUser.setPostalCode(userDTO.getPostalCode());
         currentUser.setRole(Role.valueOf(userDTO.getRole()));
 
-        // If a new password is provided, validate and update it
         if (userDTO.getNewPassword() != null && !userDTO.getNewPassword().isEmpty()) {
-            // Check if passwords match
             if (!userDTO.getNewPassword().equals(userDTO.getConfirmNewPassword())) {
                 throw new IllegalStateException("Passwords do not match");
             }
-
             currentUser.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
+        }
+
+        if (currentUser.getRole() == Role.RECEIVER && bankDetailsImage != null && !bankDetailsImage.isEmpty()) {
+            String fileName = UUID.randomUUID() + "_" + bankDetailsImage.getOriginalFilename();
+            String resourcesDir = "src/main/resources/uploads/bank-details/"+fileName;
+            Path filePath = Paths.get(resourcesDir);
+            try {
+                Files.createDirectories(filePath.getParent());
+                Files.copy(bankDetailsImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                ReceiverDetails receiverDetails = currentUser.getReceiverDetails();
+                if (receiverDetails == null) {
+                    receiverDetails = new ReceiverDetails();
+                    receiverDetails.setUser(currentUser);
+                }
+                receiverDetails.setPaymentMethod(PaymentMethod.valueOf(userDTO.getPaymentMethod().name()));
+                receiverDetails.setBankDetailsImage(fileName);
+                receiverDetailsRepository.save(receiverDetails);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to save bank details image", e);
+            }
         }
 
         User updatedUser = userRepository.save(currentUser);

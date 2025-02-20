@@ -140,6 +140,7 @@
                 <h6 class="text-primary mb-2 fs-6">Receiver Information</h6>
                     <label for="paymentMethod" class="form-label small">Payment Method</label>
                     <select
+                      (ngModelChange)="onRoleChange($event.target.value)"
                       class="form-select form-select-sm"
                       id="paymentMethod"
                       name="paymentMethod"

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "../../services/user/user.service";
 import { User } from "../../models/user/user";
-import {environment} from "../../environment";
+import { environment } from "../../environment";
 
 @Component({
   selector: 'app-user-profile',
@@ -18,11 +18,14 @@ export class UserProfileComponent implements OnInit {
     canton: '',
     postalCode: '',
     role: '',
+    paymentMethod: '',
+    bankDetailsImage: '',
     newPassword: '',
     confirmNewPassword: ''
   };
   role: string | null | undefined;
   passwordMismatch: boolean = false;
+  selectedFile: File | null = null;
 
   constructor(private userService: UserService) {}
 
@@ -51,12 +54,20 @@ export class UserProfileComponent implements OnInit {
       this.passwordMismatch = true;
       return;
     }
-    const updateUser: User = { ...this.user };
-    if (!updateUser.newPassword) {
-      delete updateUser.newPassword;
-      delete updateUser.confirmNewPassword;
+
+    if (this.user.paymentMethod === 'Twint') {
+      this.user.bankDetailsImage = null;
+      this.selectedFile = null;
     }
-    this.userService.updateUserProfile(updateUser).subscribe(
+
+    const formData = new FormData();
+    formData.append('userDTO', new Blob([JSON.stringify(this.user)], { type: 'application/json' }));
+
+    if (this.selectedFile) {
+      formData.append('bankDetailsImage', this.selectedFile);
+    }
+
+    this.userService.updateUserProfile(formData).subscribe(
       (data: User) => {
         Swal.fire({
           title: 'Success!',
@@ -67,29 +78,33 @@ export class UserProfileComponent implements OnInit {
           this.user.newPassword = '';
           this.user.confirmNewPassword = '';
         });
-
       },
       (error) => {
         Swal.fire({
-          title: 'Success!',
+          title: 'Error!',
           text: 'Error updating your data',
           icon: 'error',
           confirmButtonText: 'OK'
-        })
+        });
       }
     );
   }
 
   onImageChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.user.bankDetailsImage = file;
-    }
+    this.selectedFile = event.target.files[0];
   }
 
   getImageUrl(imageName: string): string {
-    // Replace with your backend's base URL
     const baseUrl = `${environment.apiUrl}/uploads/bank-details/`;
     return `${baseUrl}${imageName}`;
   }
+
+  onRoleChange(paymentMethod: string) {
+    this.user.paymentMethod = paymentMethod;
+    if (paymentMethod === 'Twint') {
+      this.user.bankDetailsImage = null;
+      this.selectedFile = null;
+    }
+  }
+
 }
