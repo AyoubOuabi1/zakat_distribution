@@ -6,13 +6,11 @@ import jakarta.persistence.*;
 
 @Entity
 public class ReceiverDetails {
+
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    public String getBankDetailsImage() {
-        return bankDetailsImage;
-    }
-
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;
@@ -25,7 +23,9 @@ public class ReceiverDetails {
     public void setUser(User user) {
         this.user = user;
     }
-
+    public String getBankDetailsImage() {
+        return bankDetailsImage;
+    }
     public Long getId() {
         return id;
     }

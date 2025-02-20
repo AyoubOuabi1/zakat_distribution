@@ -31,8 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final ReceiverDetailsRepository receiverDetailsRepository;
     private final PasswordEncoder passwordEncoder;
-    @PersistenceContext
-    private EntityManager entityManager;
+
     public UserService(UserRepository userRepository, ReceiverDetailsRepository receiverDetailsRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.receiverDetailsRepository = receiverDetailsRepository;
@@ -99,17 +98,18 @@ public class UserService {
     }
 
     private void saveReceiverDetails(User user, RegisterDTO registerDTO) {
-        ReceiverDetails receiverDetails = new ReceiverDetails();
+        Optional<ReceiverDetails> existingDetails = receiverDetailsRepository.findByUserId(user.getId());
+        ReceiverDetails receiverDetails = existingDetails.orElse(new ReceiverDetails());
         receiverDetails.setUser(user);
         receiverDetails.setPaymentMethod(registerDTO.getPaymentMethod());
-
         if (registerDTO.getBankDetailsImage() != null && !registerDTO.getBankDetailsImage().isEmpty()) {
             String fileName = saveImageFile(registerDTO.getBankDetailsImage());
             receiverDetails.setBankDetailsImage(fileName);
         }
-
         receiverDetailsRepository.save(receiverDetails);
     }
+
+
 
 
     private String saveImageFile(MultipartFile imageFile) {

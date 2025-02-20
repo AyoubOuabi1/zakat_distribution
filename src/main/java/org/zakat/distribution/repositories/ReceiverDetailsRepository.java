@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ReceiverDetailsRepository extends JpaRepository<ReceiverDetails, Long> {
     Optional<ReceiverDetails> findById(Long id);
 
+    Optional<ReceiverDetails> findByUserId(Long id);
 }

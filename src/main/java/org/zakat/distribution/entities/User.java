@@ -30,7 +30,7 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private ReceiverDetails receiverDetails;
 
     public void setReceiverDetails(ReceiverDetails receiverDetails) {
