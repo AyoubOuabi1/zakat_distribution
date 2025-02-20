@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 public class ReceiverDetails {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     public String getBankDetailsImage() {
@@ -13,8 +14,7 @@ public class ReceiverDetails {
     }
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
     @Enumerated(EnumType.STRING)
