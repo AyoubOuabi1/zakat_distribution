@@ -10,6 +10,29 @@ public class UserDTO {
     private String fullName;
     private String email;
     private String address;
+    private String phoneNumber;
+    private String canton;
+    private String postalCode;
+    private String role;
+    private String newPassword;
+    private String confirmNewPassword;
+    private PaymentMethod paymentMethod;
+    private String bankDetailsImage;
+
+    public UserDTO(Long id, String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role, String newPassword, String confirmNewPassword, PaymentMethod paymentMethod, String bankDetailsImage) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.canton = canton;
+        this.postalCode = postalCode;
+        this.role = role;
+        this.newPassword = newPassword;
+        this.confirmNewPassword = confirmNewPassword;
+        this.paymentMethod = paymentMethod;
+        this.bankDetailsImage = bankDetailsImage;
+    }
 
     public Long getId() {
         return id;
@@ -107,30 +130,10 @@ public class UserDTO {
         this.bankDetailsImage = bankDetailsImage;
     }
 
-    private String phoneNumber;
-    private String canton;
-    private String postalCode;
-    private String role;
-    private String newPassword;
-    private String confirmNewPassword;
-    private PaymentMethod paymentMethod;
-    private String bankDetailsImage;
+
     public UserDTO() {}
 
-    public UserDTO(Long id, String fullName, String email, String address, String phoneNumber, String canton, String postalCode, String role, String newPassword, String confirmNewPassword, PaymentMethod paymentMethod, String bankDetailsImage) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.canton = canton;
-        this.postalCode = postalCode;
-        this.role = role;
-        this.newPassword = newPassword;
-        this.confirmNewPassword = confirmNewPassword;
-        this.paymentMethod = paymentMethod;
-        this.bankDetailsImage = bankDetailsImage;
-    }
+
 
     public static UserDTO fromEntity(User user) {
         ReceiverDetails receiverDetails = user.getReceiverDetails();

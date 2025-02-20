@@ -140,15 +140,15 @@
                 <h6 class="text-primary mb-2 fs-6">Receiver Information</h6>
                     <label for="paymentMethod" class="form-label small">Payment Method</label>
                     <select
-                      (ngModelChange)="onRoleChange($event.target.value)"
+                      (ngModelChange)="onRoleChange()"
                       class="form-select form-select-sm"
                       id="paymentMethod"
                       name="paymentMethod"
                       [(ngModel)]="user.paymentMethod"
                       required
                       #paymentMethod="ngModel">
-                      <option value="TWINT">Twint App</option>
-                      <option value="BANK_TRANSFER">Bank Transfer</option>
+                      <option value="TWINT">Bank Transfer</option>
+                      <option value="BANK_TRANSFER">Twint App</option>
                     </select>
                     <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="text-danger small">
                       Payment method is required.

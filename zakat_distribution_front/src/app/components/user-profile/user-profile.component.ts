@@ -55,7 +55,7 @@ export class UserProfileComponent implements OnInit {
       return;
     }
 
-    if (this.user.paymentMethod === 'Twint') {
+    if (this.user.paymentMethod == 'TWINT') {
       this.user.bankDetailsImage = null;
       this.selectedFile = null;
     }
@@ -99,9 +99,10 @@ export class UserProfileComponent implements OnInit {
     return `${baseUrl}${imageName}`;
   }
 
-  onRoleChange(paymentMethod: string) {
-    this.user.paymentMethod = paymentMethod;
-    if (paymentMethod === 'Twint') {
+  onRoleChange() {
+    var paymentMethod=this.user.paymentMethod;
+    console.log(this.user.paymentMethod)
+    if (paymentMethod === 'TWINT') {
       this.user.bankDetailsImage = null;
       this.selectedFile = null;
     }

@@ -1,8 +1,10 @@
 package org.zakat.distribution.controllers;
 
 import lombok.Getter;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.zakat.distribution.dtos.UserDTO;
 import org.zakat.distribution.services.UserService;
 
@@ -24,9 +26,11 @@ public class UserController {
         return ResponseEntity.ok(UserDTO.fromEntity(userService.getCurrentUser()));
     }
 
-    @PutMapping("/profile")
-    public ResponseEntity<UserDTO> updateCurrentUserProfile(@RequestBody UserDTO userDTO) {
-        UserDTO updatedUser = userService.updateCurrentUser(userDTO);
+    @PutMapping(value = "/profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<UserDTO> updateCurrentUserProfile (
+            @RequestPart("userDTO") UserDTO userDTO,
+            @RequestPart(value = "bankDetailsImage", required = false) MultipartFile bankDetailsImage) throws Exception{
+        UserDTO updatedUser = userService.updateCurrentUser(userDTO, bankDetailsImage);
         return ResponseEntity.ok(updatedUser);
     }
 
