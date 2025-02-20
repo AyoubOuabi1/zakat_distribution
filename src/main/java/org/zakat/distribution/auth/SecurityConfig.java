@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/uploads/**").permitAll()
                                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/user/**").hasAnyRole("DONOR", "ADMIN", "RECEIVER")
                                 .requestMatchers("/api/donation/**").hasAnyRole("DONOR", "ADMIN")

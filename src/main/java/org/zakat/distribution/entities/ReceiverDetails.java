@@ -8,6 +8,23 @@ import jakarta.persistence.*;
 public class ReceiverDetails {
     @Id
     private Long id;
+    public String getBankDetailsImage() {
+        return bankDetailsImage;
+    }
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    private String bankDetailsImage;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -28,28 +45,9 @@ public class ReceiverDetails {
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-
-    public String getBankDetailsImage() {
-        return bankDetailsImage;
-    }
-
     public void setBankDetailsImage(String bankDetailsImage) {
         this.bankDetailsImage = bankDetailsImage;
     }
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
-
-    private String bankDetailsImage;
-
-    public void setUser(User user) {
-        this.user = user;
-        user.setReceiverDetails(this);
-    }
 }
 

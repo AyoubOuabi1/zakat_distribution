@@ -18,7 +18,18 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('auth_token');
+    const token = localStorage.getItem('auth_token');
+    const expirationTime = localStorage.getItem('auth_token_expiration');
+    if (!token || !expirationTime) {
+      return null;
+    }
+    const currentTime = new Date().getTime();
+    if (currentTime > parseInt(expirationTime)) {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('auth_token_expiration');
+      return null;
+    }
+    return token;
   }
   logout(): void {
     localStorage.removeItem('auth_token');
@@ -28,10 +39,14 @@ export class AuthService {
     return localStorage.getItem('auth_token') !== null;
   }
   register(user: FormData): Observable<any> {
-
     return this.http.post(this.apiRegisterUrl, user)
   }
 
+  setToken(token: string): void {
+    const expirationTime = new Date().getTime() + 1000 * 60 * 60 * 24;
+    localStorage.setItem('auth_token', token);
+    localStorage.setItem('auth_token_expiration', expirationTime.toString());
+  }
 
 }
 

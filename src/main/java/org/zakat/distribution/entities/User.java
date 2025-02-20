@@ -30,12 +30,18 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private ReceiverDetails receiverDetails;
 
     public void setReceiverDetails(ReceiverDetails receiverDetails) {
+        if (receiverDetails == null) {
+            if (this.receiverDetails != null) {
+                this.receiverDetails.setUser(null);
+            }
+        } else {
+            receiverDetails.setUser(this);
+        }
         this.receiverDetails = receiverDetails;
-        receiverDetails.setUser(this);
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

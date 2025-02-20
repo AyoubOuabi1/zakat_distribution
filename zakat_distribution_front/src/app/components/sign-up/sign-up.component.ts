@@ -47,7 +47,7 @@ export class SignUpComponent {
     formData.append('confirmPassword', this.user.confirmPassword);
 
     if (this.user.bankTransferImage) {
-      formData.append('bankDetailsImage', this.fileInputs[this.user.bankTransferImage]);
+      formData.append('bankDetailsImage', this.user.bankTransferImage);
     }
 
     this.registerService.register(formData).subscribe(

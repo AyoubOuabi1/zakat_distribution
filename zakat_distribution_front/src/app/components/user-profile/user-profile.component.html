@@ -135,7 +135,38 @@
                 </select>
               </div>
 
-              <!-- Password Update Section -->
+              <!-- Receiver-Specific Information -->
+              <div *ngIf="user.role === 'RECEIVER'" class="mb-3">
+                <h6 class="text-primary mb-2 fs-6">Receiver Information</h6>
+                    <label for="paymentMethod" class="form-label small">Payment Method</label>
+                    <select
+                      class="form-select form-select-sm"
+                      id="paymentMethod"
+                      name="paymentMethod"
+                      [(ngModel)]="user.paymentMethod"
+                      required
+                      #paymentMethod="ngModel">
+                      <option value="TWINT">Twint App</option>
+                      <option value="BANK_TRANSFER">Bank Transfer</option>
+                    </select>
+                    <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="text-danger small">
+                      Payment method is required.
+                    </div>
+              </div>
+              <div *ngIf="user.paymentMethod === 'BANK_TRANSFER'" class="mb-3">
+                   <label for="bankDetailsImage" class="form-label small">Bank Details Image</label>
+                  <input
+                    type="file"
+                    class="form-control form-control-sm"
+                    id="bankDetailsImage"
+                    name="bankDetailsImage"
+                    (change)="onImageChange($event)"
+                    accept="image/*">
+                  <div *ngIf="user.bankDetailsImage" class="mt-2">
+                    <img [src]="getImageUrl(user.bankDetailsImage)" alt="Bank Details Image" class="img-thumbnail" style="max-width: 100px;">
+                  </div>
+
+              </div>
               <div class="mb-3">
                 <h6 class="text-primary mb-2 fs-6">Update Password (Optional)</h6>
                 <div class="row g-2">

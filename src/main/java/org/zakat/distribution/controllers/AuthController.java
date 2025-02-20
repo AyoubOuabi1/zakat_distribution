@@ -36,13 +36,12 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> registerUser(@ModelAttribute RegisterDTO registerDTO) {
         try {
-            UserDTO createdUser = userService.registerUser(registerDTO);
+            userService.registerUser(registerDTO);
             Map<String, Object> response = new HashMap<>();
             response.put("message", "User successfully registered");
-            response.put("user", createdUser);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {

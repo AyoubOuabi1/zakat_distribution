@@ -21,7 +21,7 @@ export class SignInComponent {
   onLogin() {
     this.authService.login(this.user.email, this.user.password).subscribe(
       (response) => {
-        localStorage.setItem('auth_token', response.token);
+        this.authService.setToken(response.token);
         localStorage.setItem('role', response.role);
         this.router.navigate(['']);
       },

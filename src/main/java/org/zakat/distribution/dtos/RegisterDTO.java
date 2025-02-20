@@ -51,16 +51,16 @@ public class RegisterDTO {
         user.setPostalCode(dto.getPostalCode());
         user.setRole(Role.valueOf(dto.getRole().toUpperCase()));
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+
         if (user.getRole() == Role.RECEIVER) {
             ReceiverDetails receiverDetails = new ReceiverDetails();
-            receiverDetails.setUser(user);
             receiverDetails.setPaymentMethod(dto.getPaymentMethod());
-            user.setReceiverDetails(receiverDetails);
+            receiverDetails.setUser(user); // Set the user for receiverDetails
+            user.setReceiverDetails(receiverDetails); // Set receiverDetails for user
         }
 
         return user;
     }
-
     public String getFullName() {
         return fullName;
     }

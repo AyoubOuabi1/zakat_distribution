@@ -45,33 +45,42 @@ public class UserService {
     }
     public UserDTO registerUser(RegisterDTO registerDTO) {
         validateRegistration(registerDTO);
-
         User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
         user = userRepository.save(user);
-
         if (user.getRole() == Role.RECEIVER) {
-            ReceiverDetails receiverDetails = new ReceiverDetails();
-            receiverDetails.setUser(user);
+            ReceiverDetails receiverDetails = receiverDetailsRepository.findById(user.getId())
+                    .orElse(new ReceiverDetails());
             receiverDetails.setPaymentMethod(registerDTO.getPaymentMethod());
             if (registerDTO.getBankDetailsImage() != null && !registerDTO.getBankDetailsImage().isEmpty()) {
-                String fileName = UUID.randomUUID() + "_" + registerDTO.getBankDetailsImage().getOriginalFilename();
-                Path filePath = Paths.get("uploads/bank-details/" + fileName);
-                try {
-                    Files.createDirectories(filePath.getParent());
-                    Files.copy(registerDTO.getBankDetailsImage().getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-                    receiverDetails.setBankDetailsImage(fileName);
-                } catch (IOException e) {
-                    throw new RuntimeException("Error saving bank details image", e);
+                String resourcesDir = "src/main/resources/uploads/bank-details/";
+                Path uploadDir = Paths.get(resourcesDir);
+
+                if (!Files.exists(uploadDir)) {
+                    try {
+                        Files.createDirectories(uploadDir);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to create upload directory", e);
+                    }
+                }
+                String fileName = UUID.randomUUID()+ "_" + registerDTO.getBankDetailsImage().getOriginalFilename();
+                Path filePath = uploadDir.resolve(fileName);
+                if (!Files.exists(filePath)) {
+                    try {
+                        Files.copy(registerDTO.getBankDetailsImage().getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                        receiverDetails.setBankDetailsImage(fileName);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Error saving bank details image", e);
+                    }
+                } else {
+                    receiverDetails.setBankDetailsImage(filePath.getFileName().toString());
                 }
             }
-
+            receiverDetails.setUser(user);
             receiverDetailsRepository.save(receiverDetails);
         }
 
         return UserDTO.fromEntity(user);
     }
-
-
     private void validateRegistration(RegisterDTO registerDTO) {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             throw new IllegalArgumentException("Email is already in use.");

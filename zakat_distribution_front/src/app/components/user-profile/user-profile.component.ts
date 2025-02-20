@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "../../services/user/user.service";
 import { User } from "../../models/user/user";
+import {environment} from "../../environment";
 
 @Component({
   selector: 'app-user-profile',
@@ -77,5 +78,18 @@ export class UserProfileComponent implements OnInit {
         })
       }
     );
+  }
+
+  onImageChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.user.bankDetailsImage = file;
+    }
+  }
+
+  getImageUrl(imageName: string): string {
+    // Replace with your backend's base URL
+    const baseUrl = `${environment.apiUrl}/uploads/bank-details/`;
+    return `${baseUrl}${imageName}`;
   }
 }
