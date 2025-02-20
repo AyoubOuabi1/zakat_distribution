@@ -52,12 +52,12 @@ public class UserService {
     public void registerUser(RegisterDTO registerDTO) {
         validateRegistration(registerDTO);
         User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
-        entityManager.clear();
         user = userRepository.save(user);
         if (user.getRole() == Role.RECEIVER) {
             saveReceiverDetails(user, registerDTO);
         }
     }
+
 
     @Transactional
     public UserDTO updateCurrentUser(UserDTO userDTO, MultipartFile bankDetailsImage) {
@@ -107,9 +107,10 @@ public class UserService {
             String fileName = saveImageFile(registerDTO.getBankDetailsImage());
             receiverDetails.setBankDetailsImage(fileName);
         }
-        entityManager.detach(receiverDetails);
+
         receiverDetailsRepository.save(receiverDetails);
     }
+
 
     private String saveImageFile(MultipartFile imageFile) {
         try {
