@@ -10,10 +10,10 @@ import java.io.IOException;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Override
+    /*@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/api/uploads/bank-details/**")
                 .addResourceLocations("file:/var/www/html/aktion/");
     }
-
+*/
 }
