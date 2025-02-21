@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit {
 
   getImageUrl(imageName: string | null): string {
     if (!imageName) return '';
-    const baseUrl = `${environment.apiUrl}/uploads/bank-details/`;
+    const baseUrl = `${environment.staticFileUrl}/uploads/bank-details/`;
     return `${baseUrl}${imageName}`;
   }
 
