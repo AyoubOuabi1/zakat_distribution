@@ -102,10 +102,10 @@ public class RegisterDTO {
             }
 
             // Check file type
-            String contentType = bankDetailsImage.getContentType();
+            /*String contentType = bankDetailsImage.getContentType();
             if (contentType == null || !contentType.startsWith("image/")) {
                 throw new IllegalArgumentException("Only image files are allowed");
-            }
+            }*/
         }
     }
 

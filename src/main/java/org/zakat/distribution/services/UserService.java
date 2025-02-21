@@ -52,6 +52,7 @@ public class UserService {
         validateRegistration(registerDTO);
         User user = RegisterDTO.toEntity(registerDTO, passwordEncoder);
         user = userRepository.save(user);
+        System.out.println("user has been saved successfully" + user);
         if (user.getRole() == Role.RECEIVER) {
             saveReceiverDetails(user, registerDTO);
         }
@@ -87,7 +88,6 @@ public class UserService {
                 .orElse(null);
     }
 
-    // Private helper methods
     private void validateRegistration(RegisterDTO registerDTO) {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             throw new IllegalArgumentException("Email is already in use.");
