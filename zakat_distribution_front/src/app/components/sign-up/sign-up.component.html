@@ -112,7 +112,7 @@
           <!-- Bank Transfer Image (for Bank Transfer) -->
           <div *ngIf="user.paymentMethod === 'BANK_TRANSFER'" class="row mb-3">
             <div class="col-md-12 col-12">
-              <label for="bankTransferImage" class="form-label small-text">Upload Payment Image</label>
+              <label for="bankTransferImage" class="form-label small-text">Upload your Bank details as  Qr code for bank transfer</label>
               <input type="file" id="bankTransferImage" class="form-control form-control-sm" (change)="onImageChange($event)" accept="image/*">
               <div *ngIf="hasError('bankDetailsImage')" class="text-danger">
                 {{ getError('bankDetailsImage') }}
