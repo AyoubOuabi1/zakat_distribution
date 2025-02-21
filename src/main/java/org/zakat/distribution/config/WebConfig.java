@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/api/uploads/bank-details/**")
-                .addResourceLocations("var/www/html/aktion/");
+                .addResourceLocations("file:/var/www/html/aktion/");
     }
 
 }

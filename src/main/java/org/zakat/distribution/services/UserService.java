@@ -26,7 +26,7 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    private static final String UPLOAD_DIR = "var/www/html/aktion/";
+    private static final String UPLOAD_DIR = "file:/var/www/html/aktion/";
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
