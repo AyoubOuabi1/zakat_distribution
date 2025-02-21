@@ -1,7 +1,5 @@
 package org.zakat.distribution.services;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +24,7 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    private static final String UPLOAD_DIR = "src/main/resources/uploads/bank-details/";
+    private static final String UPLOAD_DIR = "file:/var/www/html/aktion/";
 
     private final UserRepository userRepository;
     private final ReceiverDetailsRepository receiverDetailsRepository;
