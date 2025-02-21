@@ -1,4 +1,5 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://aktion.today/api'
+  production: false,
+  apiUrl: 'https://aktion.today/api',
+  staticFileUrl: 'https://aktion.today/static'
 };
