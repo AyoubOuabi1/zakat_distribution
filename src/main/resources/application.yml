@@ -2,11 +2,6 @@
 spring:
   application:
     name: zakat distribution
-  mvc:
-    static-path-pattern: /api/uploads/bank-details/**
-  web:
-    resources:
-      static-locations: var/www/html/aktion/
   servlet:
     multipart:
       enabled: true
