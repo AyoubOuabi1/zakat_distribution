@@ -27,4 +27,8 @@ export class UserService {
   getUserRole(): string | null {
     return localStorage.getItem('role');
   }
+
+  deleteUserById(userId: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${userId}`, { withCredentials: true });
+  }
 }

@@ -228,4 +228,25 @@ public class UserService {
 
         return UserDTO.fromEntity(user, totalDonated, totalReceived);
     }
+
+
+    @Transactional
+    public void removeUserById(Long userId) {
+        logger.info("Attempting to remove user with ID: {}", userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> {
+                    logger.error("User not found with ID: {}", userId);
+                    return new ResourceNotFoundException("User not found with ID: " + userId);
+                });
+        if (user.getRole() == Role.RECEIVER) {
+            logger.debug("User role is RECEIVER. Deleting receiver details for user ID: {}", userId);
+            receiverDetailsRepository.findByUserId(userId).ifPresent(receiverDetails -> {
+                receiverDetailsRepository.delete(receiverDetails);
+                logger.info("Receiver details deleted successfully for user ID: {}", userId);
+            });
+        }
+
+        userRepository.delete(user);
+        logger.info("User deleted successfully with ID: {}", userId);
+    }
 }

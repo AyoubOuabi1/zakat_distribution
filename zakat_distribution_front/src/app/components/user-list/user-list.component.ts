@@ -42,12 +42,9 @@ export class UserListComponent implements OnInit {
   applyFilters(): void {
     let filtered = this.users;
 
-    // Apply role filter
     if (this.selectedRole !== 'ALL') {
       filtered = filtered.filter(user => user.role === this.selectedRole);
     }
-
-    // Apply search filter
     if (this.searchTerm.trim()) {
       const searchLower = this.searchTerm.toLowerCase().trim();
       filtered = filtered.filter(user =>
@@ -92,6 +89,32 @@ export class UserListComponent implements OnInit {
 
   closeModal(): void {
     this.selectedUser = null;
+  }
+
+  deleteUser(userId: number): void {
+    Swal.fire({
+      title: "Do you want to delete this item?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Dont't delete",
+      denyButtonText: `delete`
+    }).then((result: { isConfirmed: any; isDenied: any; }) => {
+      if (result.isConfirmed) {
+        Swal.fire("item are not deleted", "", "info");
+      } else if (result.isDenied) {
+        this.userService.deleteUserById(userId).subscribe({
+          next: () => {
+            Swal.fire("deleted!", "", "success");
+            this.loadUsers();
+          },
+          error: (err) => {
+             Swal.fire("Failed to delete user:",err, "error");
+          }
+        });
+
+
+      }
+    });
   }
 
   protected readonly Math = Math;
