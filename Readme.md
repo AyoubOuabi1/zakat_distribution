@@ -128,7 +128,7 @@ If the changes are in the frontend:
    ```
 6. Copy the built frontend files to the deployment location:
    ```sh
-   cp -r zakat_distribution_front/* /var/www/html/zakat-app/
+   sudo cp -r zakat_distribution_front/* /var/www/html/zakat-app/
    ```
 
 ## Step 6: Grant Admin Access to a User

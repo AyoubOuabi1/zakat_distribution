@@ -96,16 +96,9 @@ public class RegisterDTO {
 
     public void validateBankDetailsImage() {
         if (bankDetailsImage != null && !bankDetailsImage.isEmpty()) {
-            // Check file size (e.g., max 5MB)
-            if (bankDetailsImage.getSize() > 5 * 1024 * 1024) {
+             if (bankDetailsImage.getSize() > 5 * 1024 * 1024) {
                 throw new IllegalArgumentException("File size should not exceed 5MB");
             }
-
-            // Check file type
-            /*String contentType = bankDetailsImage.getContentType();
-            if (contentType == null || !contentType.startsWith("image/")) {
-                throw new IllegalArgumentException("Only image files are allowed");
-            }*/
         }
     }
 

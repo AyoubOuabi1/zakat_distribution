@@ -9,9 +9,10 @@ import {UserProfileComponent} from "./components/user-profile/user-profile.compo
 import {AuthGuard} from "./guards/auth.guard";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {DonationTableComponent} from "./components/donation-table/donation-table.component";
-import {UserListComponent} from "./components/user-list/user-list.component";
+ import {UserListComponent} from "./components/user-list/user-list.component";
 import {ReceiveHistoryComponent} from "./components/receive-history/receive-history.component";
+import {DonationTableComponent} from "./components/my-donation/donation-table.component";
+import {DonationHistoryComponent} from "./components/donation-history/donation-history.component";
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'profile', component: UserProfileComponent },
-      { path: 'donation/history', component: DonationTableComponent },
+      { path: 'mydonation', component: DonationTableComponent },
+      { path: 'donation/history', component: DonationHistoryComponent },
       { path: 'users', component: UserListComponent },
       { path: 'receive/history', component: ReceiveHistoryComponent },
       { path: '', redirectTo: 'profile', pathMatch: 'full' }

@@ -1,7 +1,5 @@
 package org.zakat.distribution.dtos;
-
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.annotation.Nullable;
 import org.zakat.distribution.entities.Donation;
 import org.zakat.distribution.entities.PaymentMethod;
 import org.zakat.distribution.entities.User;
@@ -15,15 +13,23 @@ public class DonationDTO {
     private String paymentMethod;
     private String paymentDetails;
     private LocalDate date;
-
-    public Long getId() {
-        return id;
+    private String donorFullName;
+    public DonationDTO() {
     }
-
-    public void setId(Long id) {
+    public DonationDTO(Long id, Double amount, String paymentMethod, String paymentDetails, LocalDate date, String donorFullName) {
         this.id = id;
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
+        this.paymentDetails = paymentDetails;
+        this.date = date;
+        this.donorFullName = donorFullName;
     }
-
+    public DonationDTO(Double amount, String paymentMethod, String paymentDetails, LocalDate date) {
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
+        this.paymentDetails = paymentDetails;
+        this.date = date;
+    }
     public DonationDTO(Long id, Double amount, String paymentMethod, String paymentDetails, LocalDate date) {
         this.id = id;
         this.amount = amount;
@@ -38,7 +44,8 @@ public class DonationDTO {
                 donation.getAmount(),
                 donation.getPaymentMethod().toString(),
                 donation.getPaymentDetails(),
-                donation.getDate()
+                donation.getDate(),
+                donation.getDonor().getFullName()
         );
     }
 
@@ -51,6 +58,23 @@ public class DonationDTO {
         donation.setDate(donationDTO.getDate());
         donation.setDonor(donor);
         return donation;
+    }
+    public String getDonorFullName() {
+        return donorFullName;
+    }
+
+    public void setDonorFullName(String donorFullName) {
+        this.donorFullName = donorFullName;
+    }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Double getAmount() {

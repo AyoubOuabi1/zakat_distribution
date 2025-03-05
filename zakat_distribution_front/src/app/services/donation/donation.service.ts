@@ -16,15 +16,25 @@ export class DonationService {
     return this.http.get<Donation[]>(`${this.apiUrl}/history`);
   }
 
-   addDonation(donation: Donation): Observable<Donation> {
-    return this.http.post<Donation>(this.apiUrl, donation);
+  addDonation(donation: Donation): Observable<Donation> {
+    const payload = {
+      amount: donation.amount,
+      paymentMethod: donation.paymentMethod,
+      paymentDetails: donation.paymentDetails,
+      date: donation.date
+    };
+    return this.http.post<Donation>(this.apiUrl, payload);
   }
 
-   updateDonation(id: number, donation: Donation): Observable<Donation> {
+  updateDonation(id: number, donation: Donation): Observable<Donation> {
     return this.http.put<Donation>(`${this.apiUrl}/${id}`, donation);
   }
 
-   deleteDonation(id: number): Observable<void> {
+  deleteDonation(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getAllDonationsWithDonorFullName(): Observable<Donation[]> {
+    return this.http.get<Donation[]>(`${this.apiUrl}/all`);
   }
 }

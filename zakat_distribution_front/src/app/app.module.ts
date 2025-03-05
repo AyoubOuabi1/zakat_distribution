@@ -11,9 +11,10 @@ import {HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { DonationTableComponent } from './components/donation-table/donation-table.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ReceiveHistoryComponent } from './components/receive-history/receive-history.component';
+import { DonationHistoryComponent } from './components/donation-history/donation-history.component';
+import {DonationTableComponent} from "./components/my-donation/donation-table.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ReceiveHistoryComponent } from './components/receive-history/receive-hi
     UserProfileComponent,
     DonationTableComponent,
     UserListComponent,
-    ReceiveHistoryComponent
+    ReceiveHistoryComponent,
+    DonationHistoryComponent
   ],
   imports: [
     BrowserModule,

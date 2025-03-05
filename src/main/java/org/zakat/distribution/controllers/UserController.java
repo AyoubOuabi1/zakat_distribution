@@ -58,7 +58,7 @@ public class UserController {
     @PutMapping(value = "/profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateCurrentUserProfile(
             @Valid @RequestPart("userDTO") UserDTO userDTO,
-            BindingResult bindingResult, // Captures validation errors
+            BindingResult bindingResult,
             @RequestPart(value = "bankDetailsImage", required = false) MultipartFile bankDetailsImage
     ) {
         if (bindingResult.hasErrors()) {

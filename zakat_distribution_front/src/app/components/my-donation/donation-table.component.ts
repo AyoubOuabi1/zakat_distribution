@@ -1,13 +1,10 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import {DonationService} from "../../services/donation/donation.service";
+import { DonationService } from '../../services/donation/donation.service';
+import { jsPDF } from 'jspdf';
+import {Donation} from "../../models/donation/donation";
+import {PdfService} from "../../services/pdf.service";
 
-interface Donation {
-  id?: number;
-  amount: number;
-  paymentMethod: string;
-  paymentDetails: string;
-  date: string;
-}
+
 
 declare var bootstrap: any;
 
@@ -23,7 +20,8 @@ export class DonationTableComponent implements AfterViewInit, OnInit {
   editingIndex: number | null = null;
   private modal: any;
 
-  constructor(private donationService: DonationService) {}
+  constructor(private donationService: DonationService,
+              private pdfService: PdfService,) {}
 
   ngOnInit() {
     this.loadDonations();
@@ -90,18 +88,21 @@ export class DonationTableComponent implements AfterViewInit, OnInit {
       title: "Do you want to delete this item?",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "Dont't delete",
-      denyButtonText: `delete`
+      confirmButtonText: "Don't delete",
+      denyButtonText: `Delete`
     }).then((result: { isConfirmed: any; isDenied: any; }) => {
       if (result.isConfirmed) {
-        Swal.fire("item are not deleted", "", "info");
+        Swal.fire("Item was not deleted", "", "info");
       } else if (result.isDenied) {
         this.donationService.deleteDonation(id).subscribe(() => {
           this.loadDonations();
-          Swal.fire("deleted!", "", "success");
+          Swal.fire("Deleted!", "", "success");
         });
       }
     });
+  }
 
+  generateInvoice(donation: Donation) {
+    this.pdfService.generateInvoice(donation);
   }
 }

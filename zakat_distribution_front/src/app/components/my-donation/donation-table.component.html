@@ -15,7 +15,7 @@
               Add New Donation
             </button>
 
-            <table class="table table-striped table-bordered table-responsive" >
+            <table class="table table-striped table-bordered table-responsive">
               <thead class="table-primary">
               <tr>
                 <th>Amount</th>
@@ -36,8 +36,11 @@
                           (click)="openModalForEdit(i)">
                     Edit
                   </button>
-                  <button class="btn btn-danger btn-sm" (click)="deleteDonation(i)">
+                  <button class="btn btn-danger btn-sm me-2" (click)="deleteDonation(i)">
                     Delete
+                  </button>
+                  <button class="btn btn-info btn-sm mt-2" (click)="generateInvoice(donation)">
+                    Generate Invoice
                   </button>
                 </td>
               </tr>
@@ -73,6 +76,7 @@
                     name="paymentMethod" required>
               <option value="BANK_TRANSFER">Bank Transfer</option>
               <option value="TWINT">Twint</option>
+              <option value="CASH">Cash</option>
             </select>
           </div>
 
