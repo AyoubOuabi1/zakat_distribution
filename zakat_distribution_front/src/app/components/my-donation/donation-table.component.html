@@ -1,7 +1,7 @@
 <div class="container-fluid bg-light min-vh-100 py-4">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-12 col-12">
+      <div class="col-12">
         <div class="card border-0 shadow-sm rounded-3">
           <div class="card-header bg-primary text-white text-center py-3 rounded-top-3">
             <h4 class="mb-0 fs-5">Donation History</h4>
@@ -10,42 +10,51 @@
             No donations available. Add a new donation to get started.
           </div>
           <div class="card-body p-3">
+            <!-- Add New Donation Button -->
             <button class="btn btn-primary btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#donationModal"
                     (click)="openModalForAdd()">
-              Add New Donation
+              <i class="bi bi-plus-circle"></i> Add New Donation
             </button>
 
-            <table class="table table-striped table-bordered table-responsive">
-              <thead class="table-primary">
-              <tr>
-                <th>Amount</th>
-                <th>Payment Method</th>
-                <th>Payment Details</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let donation of donations; let i = index">
-                <td>{{ donation.amount | currency }}</td>
-                <td>{{ donation.paymentMethod }}</td>
-                <td>{{ donation.paymentDetails }}</td>
-                <td>{{ donation.date | date:'mediumDate' }}</td>
-                <td>
-                  <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#donationModal"
-                          (click)="openModalForEdit(i)">
-                    Edit
-                  </button>
-                  <button class="btn btn-danger btn-sm me-2" (click)="deleteDonation(i)">
-                    Delete
-                  </button>
-                  <button class="btn btn-info btn-sm mt-2" (click)="generateInvoice(donation)">
-                    Generate Invoice
-                  </button>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            <!-- Donation Table -->
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <thead class="table-primary">
+                <tr>
+                  <th>Amount</th>
+                  <th>Payment Method</th>
+                  <th>Payment Details</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let donation of donations; let i = index">
+                  <td>{{ donation.amount | currency }}</td>
+                  <td>{{ donation.paymentMethod }}</td>
+                  <td>{{ donation.paymentDetails }}</td>
+                  <td>{{ donation.date | date:'mediumDate' }}</td>
+                  <td>
+                    <div class="d-flex flex-wrap gap-2">
+                      <!-- Edit Button -->
+                      <button class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#donationModal"
+                              (click)="openModalForEdit(i)">
+                        <i class="bi bi-pencil"></i> Edit
+                      </button>
+                      <!-- Delete Button -->
+                      <button class="btn btn-outline-danger btn-sm" (click)="deleteDonation(i)">
+                        <i class="bi bi-trash"></i> Delete
+                      </button>
+                      <!-- Generate Invoice Button -->
+                      <button class="btn btn-outline-info btn-sm" (click)="generateInvoice(donation)">
+                        <i class="bi bi-file-earmark-pdf"></i> Invoice
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

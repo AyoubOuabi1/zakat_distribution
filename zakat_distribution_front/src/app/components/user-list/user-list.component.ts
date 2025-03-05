@@ -116,6 +116,7 @@ export class UserListComponent implements OnInit {
       }
     });
   }
-
-  protected readonly Math = Math;
-}
+  get totalPages(): number {
+    return Math.ceil(this.totalUsers / this.pageSize);
+  }
+ }

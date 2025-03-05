@@ -1,5 +1,4 @@
 package org.zakat.distribution.dtos;
-import jakarta.annotation.Nullable;
 import org.zakat.distribution.entities.Donation;
 import org.zakat.distribution.entities.PaymentMethod;
 import org.zakat.distribution.entities.User;
