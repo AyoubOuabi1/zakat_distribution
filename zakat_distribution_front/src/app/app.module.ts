@@ -15,6 +15,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { ReceiveHistoryComponent } from './components/receive-history/receive-history.component';
 import { DonationHistoryComponent } from './components/donation-history/donation-history.component';
 import {DonationTableComponent} from "./components/my-donation/donation-table.component";
+import { FinancialHistoryComponent } from './components/financial-history/financial-history.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {DonationTableComponent} from "./components/my-donation/donation-table.co
     DonationTableComponent,
     UserListComponent,
     ReceiveHistoryComponent,
-    DonationHistoryComponent
+    DonationHistoryComponent,
+    FinancialHistoryComponent
   ],
   imports: [
     BrowserModule,

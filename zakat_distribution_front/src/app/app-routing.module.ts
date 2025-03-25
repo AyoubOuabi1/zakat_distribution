@@ -13,6 +13,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ReceiveHistoryComponent} from "./components/receive-history/receive-history.component";
 import {DonationTableComponent} from "./components/my-donation/donation-table.component";
 import {DonationHistoryComponent} from "./components/donation-history/donation-history.component";
+import {FinancialHistoryComponent} from "./components/financial-history/financial-history.component";
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
     children: [
       { path: 'profile', component: UserProfileComponent },
       { path: 'mydonation', component: DonationTableComponent },
-      { path: 'donation/history', component: DonationHistoryComponent },
+      { path: 'all-history', component: FinancialHistoryComponent },
       { path: 'users', component: UserListComponent },
       { path: 'receive/history', component: ReceiveHistoryComponent },
       { path: '', redirectTo: 'profile', pathMatch: 'full' }
