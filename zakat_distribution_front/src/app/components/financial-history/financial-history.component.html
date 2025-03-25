@@ -1,0 +1,157 @@
+<div class="financial-history-container">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Financial Transactions</h5>
+        <div>
+          <button class="btn btn-sm btn-light me-2" (click)="exportToCSV()">
+            <i class="bi bi-download me-1"></i> Export
+          </button>
+          <button class="btn btn-sm btn-outline-light" (click)="resetFilters()">
+            <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- Filter Controls -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-3">
+          <label class="form-label">Search</label>
+          <input type="text" class="form-control" placeholder="Name or Reference..."
+                 [(ngModel)]="filters.searchTerm" (ngModelChange)="applyFilters()">
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Type</label>
+          <select class="form-select" [(ngModel)]="filters.transactionType" (ngModelChange)="applyFilters()">
+            <option value="">All Types</option>
+            <option value="DONATION_RECEIVED">Donations</option>
+            <option value="ZAKAT_DISTRIBUTION">Zakat</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Date Range</label>
+          <div class="input-group">
+            <input type="date" class="form-control" [(ngModel)]="filters.startDate" (ngModelChange)="applyFilters()">
+            <span class="input-group-text">to</span>
+            <input type="date" class="form-control" [(ngModel)]="filters.endDate" (ngModelChange)="applyFilters()">
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Min Amount</label>
+          <input type="number" class="form-control" placeholder="Min"
+                 [(ngModel)]="filters.minAmount" (ngModelChange)="applyFilters()">
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Max Amount</label>
+          <input type="number" class="form-control" placeholder="Max"
+                 [(ngModel)]="filters.maxAmount" (ngModelChange)="applyFilters()">
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="card bg-success bg-opacity-10">
+            <div class="card-body">
+              <h6 class="card-title text-success">Total Income</h6>
+              <p class="card-text fs-4 fw-bold text-success">{{ totalDebits | currency }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-danger bg-opacity-10">
+            <div class="card-body">
+              <h6 class="card-title text-danger">Total Distributions</h6>
+              <p class="card-text fs-4 fw-bold text-danger">{{ totalCredits | currency }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card" [ngClass]="{
+            'bg-success bg-opacity-10': netBalance > 0,
+            'bg-danger bg-opacity-10': netBalance < 0,
+            'bg-light': netBalance === 0
+          }">
+            <div class="card-body">
+              <h6 class="card-title" [ngClass]="{
+                'text-success': netBalance > 0,
+                'text-danger': netBalance < 0
+              }">Net Balance</h6>
+              <p class="card-text fs-4 fw-bold" [ngClass]="{
+                'text-success': netBalance > 0,
+                'text-danger': netBalance < 0
+              }">{{ netBalance | currency }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions Table -->
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Payment Method</th>
+            <th>Reference</th>
+            <th class="text-end">Amount</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let txn of displayedTransactions" [ngClass]="{
+              'table-success': txn.transactionType === 'DONATION_RECEIVED',
+              'table-danger': txn.transactionType === 'ZAKAT_DISTRIBUTION'
+            }">
+            <td>{{ txn.date | date:'mediumDate' }}</td>
+            <td>
+                <span class="badge" [ngClass]="{
+                  'bg-success': txn.transactionType === 'DONATION_RECEIVED',
+                  'bg-danger': txn.transactionType === 'ZAKAT_DISTRIBUTION'
+                }">
+                  {{ txn.transactionType === 'DONATION_RECEIVED' ? 'Donation' : 'Zakat' }}
+                </span>
+            </td>
+            <td>{{ txn.fullName }}</td>
+            <td>{{ txn.paymentMethod }}</td>
+            <td>{{ txn.referenceNumber || '-' }}</td>
+            <td class="text-end fw-bold" [ngClass]="{
+                'text-success': txn.transactionType === 'DONATION_RECEIVED',
+                'text-danger': txn.transactionType === 'ZAKAT_DISTRIBUTION'
+              }">
+              {{ txn.amount | currency }}
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" (click)="generateDocument(txn)">
+                <i class="bi bi-file-earmark-text"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination
+      <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="totalItems > pageSize">
+        <div>
+          Showing {{ (currentPage - 1) * pageSize + 1 }} -
+          {{ Math.min(currentPage * pageSize, totalItems) }} of {{ totalItems }}
+        </div>
+        <ngb-pagination
+          [(page)]="currentPage"
+          [pageSize]="pageSize"
+          [collectionSize]="totalItems"
+          (pageChange)="onPageChange($event)">
+        </ngb-pagination>
+      </div>-->
+    </div>
+  </div>
+</div>
