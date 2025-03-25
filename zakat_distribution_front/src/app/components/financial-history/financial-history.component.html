@@ -2,13 +2,13 @@
   <div class="card shadow-sm">
     <div class="card-header bg-primary text-white">
       <div class="d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Financial Transactions</h5>
+        <h5 class="mb-0">{{ 'FINANCIAL_HISTORY.TITLE' | translate }}</h5>
         <div>
           <button class="btn btn-sm btn-light me-2" (click)="exportToCSV()">
-            <i class="bi bi-download me-1"></i> Export
+            <i class="bi bi-download me-1"></i> {{ 'GENERAL.EXPORT' | translate }}
           </button>
           <button class="btn btn-sm btn-outline-light" (click)="resetFilters()">
-            <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+            <i class="bi bi-arrow-counterclockwise me-1"></i> {{ 'GENERAL.RESET' | translate }}
           </button>
         </div>
       </div>
@@ -18,38 +18,45 @@
       <!-- Filter Controls -->
       <div class="row g-3 mb-4">
         <div class="col-md-3">
-          <label class="form-label">Search</label>
-          <input type="text" class="form-control" placeholder="Name or Reference..."
+          <label class="form-label">{{ 'GENERAL.SEARCH' | translate }}</label>
+          <input type="text" class="form-control"
+                 [placeholder]="'FINANCIAL_HISTORY.SEARCH_PLACEHOLDER' | translate"
                  [(ngModel)]="filters.searchTerm" (ngModelChange)="applyFilters()">
         </div>
 
         <div class="col-md-2">
-          <label class="form-label">Type</label>
+          <label class="form-label">{{ 'GENERAL.TYPE' | translate }}</label>
           <select class="form-select" [(ngModel)]="filters.transactionType" (ngModelChange)="applyFilters()">
-            <option value="">All Types</option>
-            <option value="DONATION_RECEIVED">Donations</option>
-            <option value="ZAKAT_DISTRIBUTION">Zakat</option>
+            <option value="">{{ 'GENERAL.ALL_TYPES' | translate }}</option>
+            <option value="DONATION_RECEIVED">{{ 'FINANCIAL_HISTORY.DONATION' | translate }}</option>
+            <option value="ZAKAT_DISTRIBUTION">{{ 'FINANCIAL_HISTORY.ZAKAT' | translate }}</option>
           </select>
         </div>
 
         <div class="col-md-3">
-          <label class="form-label">Date Range</label>
+          <label class="form-label">{{ 'FINANCIAL_HISTORY.DATE_RANGE' | translate }}</label>
           <div class="input-group">
-            <input type="date" class="form-control" [(ngModel)]="filters.startDate" (ngModelChange)="applyFilters()">
-            <span class="input-group-text">to</span>
-            <input type="date" class="form-control" [(ngModel)]="filters.endDate" (ngModelChange)="applyFilters()">
+            <input type="date" class="form-control"
+                   [placeholder]="'GENERAL.START_DATE' | translate"
+                   [(ngModel)]="filters.startDate" (ngModelChange)="applyFilters()">
+            <span class="input-group-text">{{ 'GENERAL.TO' | translate }}</span>
+            <input type="date" class="form-control"
+                   [placeholder]="'GENERAL.END_DATE' | translate"
+                   [(ngModel)]="filters.endDate" (ngModelChange)="applyFilters()">
           </div>
         </div>
 
         <div class="col-md-2">
-          <label class="form-label">Min Amount</label>
-          <input type="number" class="form-control" placeholder="Min"
+          <label class="form-label">{{ 'FINANCIAL_HISTORY.MIN_AMOUNT' | translate }}</label>
+          <input type="number" class="form-control"
+                 [placeholder]="'GENERAL.MIN' | translate"
                  [(ngModel)]="filters.minAmount" (ngModelChange)="applyFilters()">
         </div>
 
         <div class="col-md-2">
-          <label class="form-label">Max Amount</label>
-          <input type="number" class="form-control" placeholder="Max"
+          <label class="form-label">{{ 'FINANCIAL_HISTORY.MAX_AMOUNT' | translate }}</label>
+          <input type="number" class="form-control"
+                 [placeholder]="'GENERAL.MAX' | translate"
                  [(ngModel)]="filters.maxAmount" (ngModelChange)="applyFilters()">
         </div>
       </div>
@@ -59,7 +66,7 @@
         <div class="col-md-4">
           <div class="card bg-success bg-opacity-10">
             <div class="card-body">
-              <h6 class="card-title text-success">Total Income</h6>
+              <h6 class="card-title text-success">{{ 'FINANCIAL_HISTORY.TOTAL_INCOME' | translate }}</h6>
               <p class="card-text fs-4 fw-bold text-success">{{ totalDebits | currency }}</p>
             </div>
           </div>
@@ -67,7 +74,7 @@
         <div class="col-md-4">
           <div class="card bg-danger bg-opacity-10">
             <div class="card-body">
-              <h6 class="card-title text-danger">Total Distributions</h6>
+              <h6 class="card-title text-danger">{{ 'FINANCIAL_HISTORY.TOTAL_DISTRIBUTIONS' | translate }}</h6>
               <p class="card-text fs-4 fw-bold text-danger">{{ totalCredits | currency }}</p>
             </div>
           </div>
@@ -79,14 +86,12 @@
             'bg-light': netBalance === 0
           }">
             <div class="card-body">
-              <h6 class="card-title" [ngClass]="{
-                'text-success': netBalance > 0,
-                'text-danger': netBalance < 0
-              }">Net Balance</h6>
-              <p class="card-text fs-4 fw-bold" [ngClass]="{
-                'text-success': netBalance > 0,
-                'text-danger': netBalance < 0
-              }">{{ netBalance | currency }}</p>
+              <h6 class="card-title" >
+                {{ 'FINANCIAL_HISTORY.NET_BALANCE' | translate }}
+              </h6>
+              <p class="card-text fs-4 fw-bold">
+                {{ netBalance | currency }}
+              </p>
             </div>
           </div>
         </div>
@@ -97,13 +102,12 @@
         <table class="table table-hover">
           <thead class="table-light">
           <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Payment Method</th>
-            <th>Reference</th>
-            <th class="text-end">Amount</th>
-            <th>Actions</th>
+            <th>{{ 'GENERAL.DATE' | translate }}</th>
+            <th>{{ 'GENERAL.TYPE' | translate }}</th>
+            <th>{{ 'GENERAL.NAME' | translate }}</th>
+            <th>{{ 'FINANCIAL_HISTORY.PAYMENT_METHOD' | translate }}</th>
+            <th class="text-end">{{ 'GENERAL.AMOUNT' | translate }}</th>
+            <th>{{ 'GENERAL.ACTIONS' | translate }}</th>
           </tr>
           </thead>
           <tbody>
@@ -117,12 +121,11 @@
                   'bg-success': txn.transactionType === 'DONATION_RECEIVED',
                   'bg-danger': txn.transactionType === 'ZAKAT_DISTRIBUTION'
                 }">
-                  {{ txn.transactionType === 'DONATION_RECEIVED' ? 'Donation' : 'Zakat' }}
+                  {{ (txn.transactionType === 'DONATION_RECEIVED' ? 'FINANCIAL_HISTORY.DONATION' : 'FINANCIAL_HISTORY.ZAKAT') | translate }}
                 </span>
             </td>
             <td>{{ txn.fullName }}</td>
             <td>{{ txn.paymentMethod }}</td>
-            <td>{{ txn.referenceNumber || '-' }}</td>
             <td class="text-end fw-bold" [ngClass]="{
                 'text-success': txn.transactionType === 'DONATION_RECEIVED',
                 'text-danger': txn.transactionType === 'ZAKAT_DISTRIBUTION'
@@ -130,7 +133,8 @@
               {{ txn.amount | currency }}
             </td>
             <td>
-              <button class="btn btn-sm btn-outline-primary" (click)="generateDocument(txn)">
+              <button class="btn btn-sm btn-outline-primary" (click)="generateDocument(txn)"
+                      [title]="'GENERAL.GENERATE_RECEIPT' | translate">
                 <i class="bi bi-file-earmark-text"></i>
               </button>
             </td>
@@ -138,20 +142,6 @@
           </tbody>
         </table>
       </div>
-
-      <!-- Pagination
-      <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="totalItems > pageSize">
-        <div>
-          Showing {{ (currentPage - 1) * pageSize + 1 }} -
-          {{ Math.min(currentPage * pageSize, totalItems) }} of {{ totalItems }}
-        </div>
-        <ngb-pagination
-          [(page)]="currentPage"
-          [pageSize]="pageSize"
-          [collectionSize]="totalItems"
-          (pageChange)="onPageChange($event)">
-        </ngb-pagination>
-      </div>-->
     </div>
   </div>
 </div>

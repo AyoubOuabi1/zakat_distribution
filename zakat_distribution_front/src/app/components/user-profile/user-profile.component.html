@@ -6,8 +6,8 @@
         <div class="card border-0 shadow-sm rounded-3">
           <!-- Card Header -->
           <div class="card-header bg-primary text-white text-center py-3 rounded-top-3">
-            <h4 class="mb-0 fs-5">Update Your Profile</h4>
-            <p class="mb-0 mt-1 small fs-6">Please keep your information up to date</p>
+            <h4 class="mb-0 fs-5">{{ 'AUTH.PROFILE.UPDATE_TITLE' | translate }}</h4>
+            <p class="mb-0 mt-1 small fs-6">{{ 'AUTH.PROFILE.UPDATE_SUBTITLE' | translate }}</p>
           </div>
 
           <!-- Card Body -->
@@ -15,40 +15,42 @@
             <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
               <!-- Personal Information Section -->
               <div class="mb-3">
-                <h6 class="text-primary mb-2 fs-6">Personal Information</h6>
+                <h6 class="text-primary mb-2 fs-6">{{ 'AUTH.PROFILE.PERSONAL_INFO' | translate }}</h6>
                 <div class="row g-2">
                   <div class="col-md-6">
-                    <label for="fullName" class="form-label small">Full Name</label>
+                    <label for="fullName" class="form-label small">{{ 'AUTH.FULL_NAME' | translate }}</label>
                     <input
                       type="text"
                       class="form-control form-control-sm"
                       id="fullName"
                       name="fullName"
                       [(ngModel)]="user.fullName"
+                      [placeholder]="'AUTH.FULL_NAME_PLACEHOLDER' | translate"
                       required
                       #fullName="ngModel">
                     <div *ngIf="fullName?.invalid && fullName?.touched" class="text-danger small">
-                      Full Name is required.
+                      {{ 'AUTH.VALIDATION.FULL_NAME_REQUIRED' | translate }}
                     </div>
                     <div *ngIf="hasError('fullName')" class="text-danger small">
-                      {{ getError('fullName') }}
+                      {{ getError('fullName') | translate }}
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <label for="email" class="form-label small">Email Address</label>
+                    <label for="email" class="form-label small">{{ 'AUTH.EMAIL' | translate }}</label>
                     <input
                       type="email"
                       class="form-control form-control-sm"
                       id="email"
                       name="email"
                       [(ngModel)]="user.email"
+                      [placeholder]="'AUTH.EMAIL_PLACEHOLDER' | translate"
                       required
                       #email="ngModel">
                     <div *ngIf="email?.invalid && email?.touched" class="text-danger small">
-                      Email is required and must be valid.
+                      {{ 'AUTH.VALIDATION.EMAIL_REQUIRED' | translate }}
                     </div>
                     <div *ngIf="hasError('email')" class="text-danger small">
-                      {{ getError('email') }}
+                      {{ getError('email') | translate }}
                     </div>
                   </div>
                 </div>
@@ -56,40 +58,42 @@
 
               <!-- Contact Information Section -->
               <div class="mb-3">
-                <h6 class="text-primary mb-2 fs-6">Contact Information</h6>
+                <h6 class="text-primary mb-2 fs-6">{{ 'AUTH.PROFILE.CONTACT_INFO' | translate }}</h6>
                 <div class="row g-2">
                   <div class="col-md-6">
-                    <label for="phoneNumber" class="form-label small">Phone Number</label>
+                    <label for="phoneNumber" class="form-label small">{{ 'AUTH.PHONE' | translate }}</label>
                     <input
                       type="tel"
                       class="form-control form-control-sm"
                       id="phoneNumber"
                       name="phoneNumber"
                       [(ngModel)]="user.phoneNumber"
+                      [placeholder]="'AUTH.PHONE_PLACEHOLDER' | translate"
                       required
                       #phoneNumber="ngModel">
                     <div *ngIf="phoneNumber?.invalid && phoneNumber?.touched" class="text-danger small">
-                      Phone Number is required.
+                      {{ 'AUTH.VALIDATION.PHONE_REQUIRED' | translate }}
                     </div>
                     <div *ngIf="hasError('phoneNumber')" class="text-danger small">
-                      {{ getError('phoneNumber') }}
+                      {{ getError('phoneNumber') | translate }}
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <label for="address" class="form-label small">Address</label>
+                    <label for="address" class="form-label small">{{ 'AUTH.ADDRESS' | translate }}</label>
                     <input
                       type="text"
                       class="form-control form-control-sm"
                       id="address"
                       name="address"
                       [(ngModel)]="user.address"
+                      [placeholder]="'AUTH.ADDRESS_PLACEHOLDER' | translate"
                       required
                       #address="ngModel">
                     <div *ngIf="address?.invalid && address?.touched" class="text-danger small">
-                      Address is required.
+                      {{ 'AUTH.VALIDATION.ADDRESS_REQUIRED' | translate }}
                     </div>
                     <div *ngIf="hasError('address')" class="text-danger small">
-                      {{ getError('address') }}
+                      {{ getError('address') | translate }}
                     </div>
                   </div>
                 </div>
@@ -97,40 +101,42 @@
 
               <!-- Location Information Section -->
               <div class="mb-3">
-                <h6 class="text-primary mb-2 fs-6">Location Details</h6>
+                <h6 class="text-primary mb-2 fs-6">{{ 'AUTH.PROFILE.LOCATION_INFO' | translate }}</h6>
                 <div class="row g-2">
                   <div class="col-md-6">
-                    <label for="canton" class="form-label small">Canton</label>
+                    <label for="canton" class="form-label small">{{ 'AUTH.CANTON' | translate }}</label>
                     <input
                       type="text"
                       class="form-control form-control-sm"
                       id="canton"
                       name="canton"
                       [(ngModel)]="user.canton"
+                      [placeholder]="'AUTH.CANTON_PLACEHOLDER' | translate"
                       required
                       #canton="ngModel">
                     <div *ngIf="canton?.invalid && canton?.touched" class="text-danger small">
-                      Canton is required.
+                      {{ 'AUTH.VALIDATION.CANTON_REQUIRED' | translate }}
                     </div>
                     <div *ngIf="hasError('canton')" class="text-danger small">
-                      {{ getError('canton') }}
+                      {{ getError('canton') | translate }}
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <label for="postalCode" class="form-label small">Postal Code</label>
+                    <label for="postalCode" class="form-label small">{{ 'AUTH.POSTAL_CODE' | translate }}</label>
                     <input
                       type="text"
                       class="form-control form-control-sm"
                       id="postalCode"
                       name="postalCode"
                       [(ngModel)]="user.postalCode"
+                      [placeholder]="'AUTH.POSTAL_CODE_PLACEHOLDER' | translate"
                       required
                       #postalCode="ngModel">
                     <div *ngIf="postalCode?.invalid && postalCode?.touched" class="text-danger small">
-                      Postal Code is required.
+                      {{ 'AUTH.VALIDATION.POSTAL_CODE_REQUIRED' | translate }}
                     </div>
                     <div *ngIf="hasError('postalCode')" class="text-danger small">
-                      {{ getError('postalCode') }}
+                      {{ getError('postalCode') | translate }}
                     </div>
                   </div>
                 </div>
@@ -138,7 +144,7 @@
 
               <!-- Role Selection -->
               <div class="mb-3">
-                <h6 class="text-primary mb-2 fs-6">Role Selection</h6>
+                <h6 class="text-primary mb-2 fs-6">{{ 'AUTH.PROFILE.ROLE_SELECTION' | translate }}</h6>
                 <select
                   (ngModelChange)="onRoleChange()"
                   class="form-select form-select-sm"
@@ -147,20 +153,20 @@
                   [(ngModel)]="user.role"
                   required
                   #roleControl="ngModel">
-                  <option value="">Select your role</option>
-                  <option *ngIf="role==='ADMIN'" value="ADMIN">Admin</option>
-                  <option value="DONOR">Donor</option>
-                  <option value="RECEIVER">Receiver</option>
+                  <option value="">{{ 'AUTH.PROFILE.SELECT_ROLE' | translate }}</option>
+                  <option *ngIf="role==='ADMIN'" value="ADMIN">{{ 'AUTH.ROLES.ADMIN' | translate }}</option>
+                  <option value="DONOR">{{ 'AUTH.ROLES.DONOR' | translate }}</option>
+                  <option value="RECEIVER">{{ 'AUTH.ROLES.RECEIVER' | translate }}</option>
                 </select>
                 <div *ngIf="hasError('role')" class="text-danger small">
-                  {{ getError('role') }}
+                  {{ getError('role') | translate }}
                 </div>
               </div>
 
               <!-- Receiver-Specific Information -->
               <div *ngIf="user.role === 'RECEIVER'" class="mb-3">
-                <h6 class="text-primary mb-2 fs-6">Receiver Information</h6>
-                <label for="paymentMethod" class="form-label small">Payment Method</label>
+                <h6 class="text-primary mb-2 fs-6">{{ 'AUTH.PROFILE.RECEIVER_INFO' | translate }}</h6>
+                <label for="paymentMethod" class="form-label small">{{ 'AUTH.PAYMENT_METHOD' | translate }}</label>
                 <select
                   (ngModelChange)="onPaymentMethodChange()"
                   class="form-select form-select-sm"
@@ -169,20 +175,20 @@
                   [(ngModel)]="user.paymentMethod"
                   required
                   #paymentMethod="ngModel">
-                  <option value="BANK_TRANSFER">Bank Transfer</option>
-                  <option value="TWINT">Twint App</option>
+                  <option value="BANK_TRANSFER">{{ 'AUTH.PAYMENT_METHODS.BANK_TRANSFER' | translate }}</option>
+                  <option value="TWINT">{{ 'AUTH.PAYMENT_METHODS.TWINT' | translate }}</option>
                 </select>
                 <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="text-danger small">
-                  Payment method is required.
+                  {{ 'AUTH.VALIDATION.PAYMENT_METHOD_REQUIRED' | translate }}
                 </div>
                 <div *ngIf="hasError('paymentMethod')" class="text-danger small">
-                  {{ getError('paymentMethod') }}
+                  {{ getError('paymentMethod') | translate }}
                 </div>
               </div>
 
               <!-- Bank Details Image -->
               <div *ngIf="user.role === 'RECEIVER' && user.paymentMethod === 'BANK_TRANSFER'" class="mb-3">
-                <label for="bankDetailsImage" class="form-label small">Bank Details As Qr code</label>
+                <label for="bankDetailsImage" class="form-label small">{{ 'AUTH.BANK_DETAILS_LABEL' | translate }}</label>
                 <input
                   type="file"
                   class="form-control form-control-sm"
@@ -191,51 +197,53 @@
                   (change)="onImageChange($event)"
                   accept="image/*">
                 <div *ngIf="hasError('bankDetailsImage')" class="text-danger small">
-                  {{ getError('bankDetailsImage') }}
+                  {{ getError('bankDetailsImage') | translate }}
                 </div>
                 <div class="mt-2">
-                  <img  [src]="getImageUrl(user.bankDetailsImage)" alt="Bank Details Image" class="img-thumbnail" style="max-width: 200px; max-height: 200px">
+                  <img [src]="getImageUrl(user.bankDetailsImage)" alt="Bank Details Image" class="img-thumbnail" style="max-width: 200px; max-height: 200px">
                 </div>
               </div>
 
               <!-- Update Password Section -->
               <div class="mb-3">
-                <h6 class="text-primary mb-2 fs-6">Update Password (Optional)</h6>
+                <h6 class="text-primary mb-2 fs-6">{{ 'AUTH.PROFILE.UPDATE_PASSWORD' | translate }}</h6>
                 <div class="row g-2">
                   <div class="col-md-6">
-                    <label for="newPassword" class="form-label small">New Password</label>
+                    <label for="newPassword" class="form-label small">{{ 'AUTH.PASSWORD' | translate }}</label>
                     <input
                       type="password"
                       class="form-control form-control-sm"
                       id="newPassword"
                       name="newPassword"
                       [(ngModel)]="user.newPassword"
+                      [placeholder]="'AUTH.PASSWORD_PLACEHOLDER' | translate"
                       minlength="8"
                       pattern="^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$"
                       #newPassword="ngModel">
                     <div *ngIf="newPassword?.invalid && newPassword?.touched" class="text-danger small">
-                      Password must be at least 8 characters long and contain both letters and numbers.
+                      {{ 'AUTH.VALIDATION.PASSWORD_REQUIREMENTS' | translate }}
                     </div>
                     <div *ngIf="hasError('newPassword')" class="text-danger small">
-                      {{ getError('newPassword') }}
+                      {{ getError('newPassword') | translate }}
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <label for="confirmNewPassword" class="form-label small">Confirm New Password</label>
+                    <label for="confirmNewPassword" class="form-label small">{{ 'AUTH.CONFIRM_PASSWORD' | translate }}</label>
                     <input
                       type="password"
                       class="form-control form-control-sm"
                       id="confirmNewPassword"
                       name="confirmNewPassword"
                       [(ngModel)]="user.confirmNewPassword"
+                      [placeholder]="'AUTH.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
                       [ngClass]="{ 'is-invalid': passwordMismatch }"
                       (ngModelChange)="checkPasswordMatch()"
                       #confirmNewPassword="ngModel">
                     <div *ngIf="passwordMismatch" class="text-danger small">
-                      Passwords do not match!
+                      {{ 'AUTH.VALIDATION.PASSWORD_MISMATCH' | translate }}
                     </div>
                     <div *ngIf="hasError('confirmNewPassword')" class="text-danger small">
-                      {{ getError('confirmNewPassword') }}
+                      {{ getError('confirmNewPassword') | translate }}
                     </div>
                   </div>
                 </div>
@@ -246,7 +254,7 @@
                   type="submit"
                   class="btn btn-primary btn-sm"
                   [disabled]="!profileForm.form.valid || passwordMismatch">
-                  Update Profile
+                  {{ 'AUTH.PROFILE.UPDATE_BUTTON' | translate }}
                 </button>
               </div>
             </form>
@@ -255,9 +263,9 @@
         <!-- Additional Card for Donors -->
         <div *ngIf="role !== 'RECEIVER'" class="card border-0 shadow-sm rounded-3 mt-3">
           <div class="card-body p-3">
-            <h5 class="text-center text-primary mb-3 fs-6">Join Us in Making a Difference</h5>
+            <h5 class="text-center text-primary mb-3 fs-6">{{ 'AUTH.PROFILE.DONOR_CARD_TITLE' | translate }}</h5>
             <p class="text-center text-muted small mb-3">
-              Your participation in Zakat helps strengthen our community and supports those in need
+              {{ 'AUTH.PROFILE.DONOR_CARD_DESC' | translate }}
             </p>
 
             <!-- Images Section -->
@@ -271,8 +279,8 @@
                       class="w-100 object-fit-contain"
                       style="height: 140px; width: 140px; margin: auto; display: block;">
                   </div>
-                  <h6 class="fs-6 mb-1">for Bank Transfer</h6>
-                  <p class="text-muted small mb-0" style="font-size: 0.8rem;">Scan to make donation</p>
+                  <h6 class="fs-6 mb-1">{{ 'AUTH.PROFILE.BANK_TRANSFER' | translate }}</h6>
+                  <p class="text-muted small mb-0" style="font-size: 0.8rem;">{{ 'AUTH.PROFILE.SCAN_TO_DONATE' | translate }}</p>
                 </div>
               </div>
               <div class="col-md-6">
@@ -284,8 +292,8 @@
                       class="w-100 object-fit-contain"
                       style="height: 140px; width: 140px; margin: auto; display: block;">
                   </div>
-                  <h6 class="fs-6 mb-1">for Twint App Transfer</h6>
-                  <p class="text-muted small mb-0" style="font-size: 0.8rem;">Scan to make donation</p>
+                  <h6 class="fs-6 mb-1">{{ 'AUTH.PROFILE.TWINT_TRANSFER' | translate }}</h6>
+                  <p class="text-muted small mb-0" style="font-size: 0.8rem;">{{ 'AUTH.PROFILE.SCAN_TO_DONATE' | translate }}</p>
                 </div>
               </div>
             </div>

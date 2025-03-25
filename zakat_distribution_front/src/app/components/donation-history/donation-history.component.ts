@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Donation } from '../../models/donation/donation';
 import { DonationService } from '../../services/donation/donation.service';
 import { PdfService } from '../../services/pdf.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-donation-history',
@@ -23,8 +24,7 @@ export class DonationHistoryComponent implements OnInit {
 
   constructor(
     private donationService: DonationService,
-    private pdfService: PdfService
-  ) {}
+    private pdfService: PdfService) {}
 
   ngOnInit(): void {
     this.loadDonations();

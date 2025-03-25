@@ -1,0 +1,172 @@
+{
+  "GENERAL": {
+    "ALL": "All",
+    "SEARCH": "Rechercher",
+    "TYPE": "Type",
+    "ALL_TYPES": "Tous les types",
+    "DATE": "Date",
+    "NAME": "Nom",
+    "AMOUNT": "Montant",
+    "ACTIONS": "Actions",
+    "EXPORT": "Exporter",
+    "RESET": "Réinitialiser",
+    "START_DATE": "Date de début",
+    "END_DATE": "Date de fin",
+    "TO": "à",
+    "MIN": "Min",
+    "MAX": "Max",
+    "SHOWING": "Affichage",
+    "OF": "sur",
+    "GENERATE_RECEIPT": "Générer un reçu",
+    "PAGE": "Page",
+    "PREVIOUS": "Précédent",
+    "NEXT": "Suivant",
+    "EDIT": "Modifier",
+    "DETAILS": "Détails",
+    "DELETE": "Supprimer"
+  },
+  "USERS": {
+    "TITLE": "Liste des Utilisateurs",
+    "FILTER_BY_ROLE": "Filtrer par Rôle",
+    "SEARCH_PLACEHOLDER": "Rechercher par nom, email, canton ou téléphone",
+    "NO_USERS_FOUND": "Aucun utilisateur trouvé",
+    "DETAILS_TITLE": "Détails de l'Utilisateur",
+    "TOTAL_DONATED": "Total Donné",
+    "TOTAL_RECEIVED": "Total Reçu",
+    "BANK_DETAILS_IMAGE": "Image des Coordonnées Bancaires"
+  },
+  "DASHBOARD": {
+    "TITLE": "Tableau de bord",
+    "PROFILE": "Profil",
+    "MY_DONATION": "Mes dons",
+    "FINANCIAL_HISTORY": "Historique financier",
+    "RECEIVE_HISTORY": "Historique de réception",
+    "USERS": "Utilisateurs",
+    "LOGOUT": "Déconnexion",
+    "OVERVIEW": "tableau de bord"
+  },
+  "DONATION": {
+    "TITLE": "Historique des Dons",
+    "NO_DONATIONS": "Aucun don disponible. Ajoutez un nouveau don pour commencer.",
+    "ADD_NEW": "Ajouter un Don",
+    "AMOUNT": "Montant",
+    "PAYMENT_METHOD": "Méthode de Paiement",
+    "PAYMENT_DETAILS": "Détails de Paiement",
+    "INVOICE": "Facture",
+    "ADD_TITLE": "Ajouter un Nouveau Don",
+    "EDIT_TITLE": "Modifier le Don",
+    "ADD_BTN": "Ajouter le Don",
+    "UPDATE_BTN": "Mettre à Jour"
+  },
+  "PAYMENT_METHOD": {
+    "BANK_TRANSFER": "Virement Bancaire",
+    "TWINT": "Twint",
+    "CASH": "Espèces"
+  },
+  "DONATION_HISTORY": {
+    "TITLE": "Historique des Dons",
+    "NO_DONATIONS": "Aucun don disponible",
+    "SEARCH_DONOR": "Rechercher par nom de donateur...",
+    "SEARCH_AMOUNT": "Rechercher par montant...",
+    "SEARCH_ID": "Rechercher par ID...",
+    "PAYMENT_METHOD": "Méthode de Paiement",
+    "PAYMENT_DETAILS": "Détails de Paiement",
+    "DONOR_NAME": "Nom Complet du Donateur",
+    "INVOICE": "Facture"
+  },
+  "RECEIVE_HISTORY": {
+    "TITLE": "Historique de Réception",
+    "NO_HISTORY": "Aucun historique de réception disponible",
+    "ADD_NEW": "Ajouter un Nouvel Enregistrement",
+    "AMOUNT": "Montant Reçu",
+    "DATE": "Date de Réception",
+    "ADD_TITLE": "Ajouter un Nouvel Enregistrement",
+    "EDIT_TITLE": "Modifier l'Enregistrement",
+    "ADD_BTN": "Ajouter l'Enregistrement",
+    "UPDATE_BTN": "Mettre à Jour"
+  },
+  "FINANCIAL_HISTORY": {
+    "TITLE": "Transactions Financières",
+    "SEARCH_PLACEHOLDER": "Rechercher par nom...",
+    "DATE_RANGE": "Période",
+    "TOTAL_INCOME": "Revenu Total",
+    "TOTAL_DISTRIBUTIONS": "Distributions Totales",
+    "NET_BALANCE": "Solde Net",
+    "DONATION": "Don",
+    "ZAKAT": "Zakat",
+    "PAYMENT_METHOD": "Méthode de paiement",
+    "MIN_AMOUNT": "Montant min",
+    "MAX_AMOUNT": "Montant max"
+  },
+  "AUTH": {
+    "FULL_NAME": "Nom Complet",
+    "FULL_NAME_PLACEHOLDER": "Entrez votre nom complet",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "Entrez votre email",
+    "ADDRESS": "Adresse",
+    "ADDRESS_PLACEHOLDER": "Entrez votre adresse",
+    "PHONE": "Numéro de Téléphone",
+    "PHONE_PLACEHOLDER": "Entrez votre numéro de téléphone",
+    "CANTON": "Canton",
+    "CANTON_PLACEHOLDER": "Entrez le canton",
+    "POSTAL_CODE": "Code Postal",
+    "POSTAL_CODE_PLACEHOLDER": "Code Postal",
+    "ROLE": "Rôle",
+    "ROLES": {
+      "DONOR": "Donateur",
+      "RECEIVER": "Bénéficiaire",
+      "ADMIN": "Administrateur"
+    },
+    "PAYMENT_METHOD": "Méthode de Paiement",
+    "PAYMENT_METHODS": {
+      "TWINT": "Application Twint",
+      "BANK_TRANSFER": "Virement Bancaire"
+    },
+    "PROFILE": {
+      "UPDATE_TITLE": "Mettre à jour votre profil",
+      "UPDATE_SUBTITLE": "Veuillez maintenir vos informations à jour",
+      "PERSONAL_INFO": "Informations personnelles",
+      "CONTACT_INFO": "Informations de contact",
+      "LOCATION_INFO": "Détails de localisation",
+      "ROLE_SELECTION": "Sélection du rôle",
+      "SELECT_ROLE": "Sélectionnez votre rôle",
+      "RECEIVER_INFO": "Informations du bénéficiaire",
+      "UPDATE_PASSWORD": "Mettre à jour le mot de passe (Optionnel)",
+      "UPDATE_BUTTON": "Mettre à jour le profil",
+      "DONOR_CARD_TITLE": "Rejoignez-nous pour faire la différence",
+      "DONOR_CARD_DESC": "Votre participation à la Zakat renforce notre communauté et soutient ceux dans le besoin",
+      "BANK_TRANSFER": "pour virement bancaire",
+      "TWINT_TRANSFER": "pour l'application Twint",
+      "SCAN_TO_DONATE": "Scannez pour faire un don"
+    },
+    "BANK_DETAILS_LABEL": "Téléchargez vos coordonnées bancaires sous forme de QR code",
+    "PASSWORD": "Mot de Passe",
+    "PASSWORD_PLACEHOLDER": "Entrez votre mot de passe",
+    "CONFIRM_PASSWORD": "Confirmer le Mot de Passe",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmez votre mot de passe",
+    "SIGN_UP": {
+      "TITLE": "Inscription",
+      "BUTTON": "S'inscrire",
+      "HAVE_ACCOUNT": "Vous avez déjà un compte?",
+      "LOGIN_LINK": "Connectez-vous ici"
+    },
+    "SIGN_IN": {
+      "TITLE": "Connexion",
+      "BUTTON": "Se connecter",
+      "NO_ACCOUNT": "Vous n'avez pas de compte ?",
+      "SIGN_UP_LINK": "Inscrivez-vous ici"
+    },
+    "VALIDATION": {
+      "FULL_NAME_REQUIRED": "Le nom complet est requis.",
+      "EMAIL_REQUIRED": "L'email est requis et doit être valide.",
+      "ADDRESS_REQUIRED": "L'adresse est requise.",
+      "PHONE_REQUIRED": "Le numéro de téléphone est requis.",
+      "CANTON_REQUIRED": "Le canton est requis.",
+      "POSTAL_CODE_REQUIRED": "Le code postal est requis.",
+      "ROLE_REQUIRED": "Le rôle est requis.",
+      "PAYMENT_METHOD_REQUIRED": "La méthode de paiement est requise.",
+      "PASSWORD_REQUIREMENTS": "Le mot de passe doit contenir au moins 8 caractères avec des lettres et des chiffres.",
+      "PASSWORD_MISMATCH": "Les mots de passe ne correspondent pas!"
+    }
+  }
+}

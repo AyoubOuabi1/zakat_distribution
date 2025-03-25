@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6 col-sm-8 col-12">
       <div class="card shadow-sm rounded-4 p-4">
-        <h2 class="text-center mb-4">Sign Up</h2>
+        <h2 class="text-center mb-4">{{ 'AUTH.SIGN_UP.TITLE' | translate }}</h2>
 
         <!-- Register Form -->
         <form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
@@ -10,20 +10,26 @@
           <!-- Full Name -->
           <div class="row mb-3">
             <div class="col-md-6 col-12">
-              <label for="fullName" class="form-label small-text">Full Name</label>
-              <input type="text" id="fullName" class="form-control form-control-sm" [(ngModel)]="user.fullName" name="fullName" placeholder="Enter your full name" required #fullName="ngModel">
+              <label for="fullName" class="form-label small-text">{{ 'AUTH.FULL_NAME' | translate }}</label>
+              <input type="text" id="fullName" class="form-control form-control-sm"
+                     [(ngModel)]="user.fullName" name="fullName"
+                     [placeholder]="'AUTH.FULL_NAME_PLACEHOLDER' | translate"
+                     required #fullName="ngModel">
               <div *ngIf="fullName?.invalid && fullName?.touched" class="text-danger">
-                Full Name is required.
+                {{ 'AUTH.VALIDATION.FULL_NAME_REQUIRED' | translate }}
               </div>
               <div *ngIf="hasError('fullName')" class="text-danger">
                 {{ getError('fullName') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
-              <label for="emailReg" class="form-label small-text">Email</label>
-              <input type="email" id="emailReg" class="form-control form-control-sm" [(ngModel)]="user.email" name="email" placeholder="Enter your email" required #email="ngModel">
+              <label for="emailReg" class="form-label small-text">{{ 'AUTH.EMAIL' | translate }}</label>
+              <input type="email" id="emailReg" class="form-control form-control-sm"
+                     [(ngModel)]="user.email" name="email"
+                     [placeholder]="'AUTH.EMAIL_PLACEHOLDER' | translate"
+                     required #email="ngModel">
               <div *ngIf="email?.invalid && email?.touched" class="text-danger">
-                Email is required and must be valid.
+                {{ 'AUTH.VALIDATION.EMAIL_REQUIRED' | translate }}
               </div>
               <div *ngIf="hasError('email')" class="text-danger">
                 {{ getError('email') }}
@@ -34,20 +40,26 @@
           <!-- Address and Phone Number -->
           <div class="row mb-3">
             <div class="col-md-6 col-12">
-              <label for="address" class="form-label small-text">Address</label>
-              <input type="text" id="address" class="form-control form-control-sm" [(ngModel)]="user.address" name="address" placeholder="Enter your address" required #address="ngModel">
+              <label for="address" class="form-label small-text">{{ 'AUTH.ADDRESS' | translate }}</label>
+              <input type="text" id="address" class="form-control form-control-sm"
+                     [(ngModel)]="user.address" name="address"
+                     [placeholder]="'AUTH.ADDRESS_PLACEHOLDER' | translate"
+                     required #address="ngModel">
               <div *ngIf="address?.invalid && address?.touched" class="text-danger">
-                Address is required.
+                {{ 'AUTH.VALIDATION.ADDRESS_REQUIRED' | translate }}
               </div>
               <div *ngIf="hasError('address')" class="text-danger">
                 {{ getError('address') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
-              <label for="phoneNumber" class="form-label small-text">Phone Number</label>
-              <input type="text" id="phoneNumber" class="form-control form-control-sm" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required #phoneNumber="ngModel">
+              <label for="phoneNumber" class="form-label small-text">{{ 'AUTH.PHONE' | translate }}</label>
+              <input type="text" id="phoneNumber" class="form-control form-control-sm"
+                     [(ngModel)]="user.phoneNumber" name="phoneNumber"
+                     [placeholder]="'AUTH.PHONE_PLACEHOLDER' | translate"
+                     required #phoneNumber="ngModel">
               <div *ngIf="phoneNumber?.invalid && phoneNumber?.touched" class="text-danger">
-                Phone Number is required.
+                {{ 'AUTH.VALIDATION.PHONE_REQUIRED' | translate }}
               </div>
               <div *ngIf="hasError('phoneNumber')" class="text-danger">
                 {{ getError('phoneNumber') }}
@@ -58,20 +70,26 @@
           <!-- Canton and Postal Code -->
           <div class="row mb-3">
             <div class="col-md-6 col-12">
-              <label for="canton" class="form-label small-text">Canton</label>
-              <input type="text" id="canton" class="form-control form-control-sm" [(ngModel)]="user.canton" name="canton" placeholder="Enter canton" required #canton="ngModel">
+              <label for="canton" class="form-label small-text">{{ 'AUTH.CANTON' | translate }}</label>
+              <input type="text" id="canton" class="form-control form-control-sm"
+                     [(ngModel)]="user.canton" name="canton"
+                     [placeholder]="'AUTH.CANTON_PLACEHOLDER' | translate"
+                     required #canton="ngModel">
               <div *ngIf="canton?.invalid && canton?.touched" class="text-danger">
-                Canton is required.
+                {{ 'AUTH.VALIDATION.CANTON_REQUIRED' | translate }}
               </div>
               <div *ngIf="hasError('canton')" class="text-danger">
                 {{ getError('canton') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
-              <label for="postalCode" class="form-label small-text">Postal Code</label>
-              <input type="text" id="postalCode" class="form-control form-control-sm" [(ngModel)]="user.postalCode" name="postalCode" placeholder="Postal Code" required #postalCode="ngModel">
+              <label for="postalCode" class="form-label small-text">{{ 'AUTH.POSTAL_CODE' | translate }}</label>
+              <input type="text" id="postalCode" class="form-control form-control-sm"
+                     [(ngModel)]="user.postalCode" name="postalCode"
+                     [placeholder]="'AUTH.POSTAL_CODE_PLACEHOLDER' | translate"
+                     required #postalCode="ngModel">
               <div *ngIf="postalCode?.invalid && postalCode?.touched" class="text-danger">
-                Postal Code is required.
+                {{ 'AUTH.VALIDATION.POSTAL_CODE_REQUIRED' | translate }}
               </div>
               <div *ngIf="hasError('postalCode')" class="text-danger">
                 {{ getError('postalCode') }}
@@ -81,13 +99,15 @@
 
           <!-- Role -->
           <div class="mb-3">
-            <label for="role" class="form-label small-text">Role</label>
-            <select id="role" class="form-control form-control-sm" [(ngModel)]="user.role" name="role" required #role="ngModel" (ngModelChange)="onRoleChange()">
-              <option value="DONOR">Donor</option>
-              <option value="RECEIVER">Receiver</option>
+            <label for="role" class="form-label small-text">{{ 'AUTH.ROLE' | translate }}</label>
+            <select id="role" class="form-control form-control-sm"
+                    [(ngModel)]="user.role" name="role"
+                    required #role="ngModel" (ngModelChange)="onRoleChange()">
+              <option value="DONOR">{{ 'AUTH.ROLES.DONOR' | translate }}</option>
+              <option value="RECEIVER">{{ 'AUTH.ROLES.RECEIVER' | translate }}</option>
             </select>
             <div *ngIf="role?.invalid && role?.touched" class="text-danger">
-              Role is required.
+              {{ 'AUTH.VALIDATION.ROLE_REQUIRED' | translate }}
             </div>
             <div *ngIf="hasError('role')" class="text-danger">
               {{ getError('role') }}
@@ -96,13 +116,15 @@
 
           <!-- Payment Method (for Receivers) -->
           <div *ngIf="user.role === 'RECEIVER'" class="mb-3">
-            <label for="paymentMethod" class="form-label small-text">Payment Method</label>
-            <select id="paymentMethod" class="form-control form-control-sm" [(ngModel)]="user.paymentMethod" name="paymentMethod" required #paymentMethod="ngModel">
-              <option value="TWINT">Twint App</option>
-              <option value="BANK_TRANSFER">Bank Transfer</option>
+            <label for="paymentMethod" class="form-label small-text">{{ 'AUTH.PAYMENT_METHOD' | translate }}</label>
+            <select id="paymentMethod" class="form-control form-control-sm"
+                    [(ngModel)]="user.paymentMethod" name="paymentMethod"
+                    required #paymentMethod="ngModel">
+              <option value="TWINT">{{ 'AUTH.PAYMENT_METHODS.TWINT' | translate }}</option>
+              <option value="BANK_TRANSFER">{{ 'AUTH.PAYMENT_METHODS.BANK_TRANSFER' | translate }}</option>
             </select>
             <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="text-danger">
-              Payment method is required.
+              {{ 'AUTH.VALIDATION.PAYMENT_METHOD_REQUIRED' | translate }}
             </div>
             <div *ngIf="hasError('paymentMethod')" class="text-danger">
               {{ getError('paymentMethod') }}
@@ -112,8 +134,9 @@
           <!-- Bank Transfer Image (for Bank Transfer) -->
           <div *ngIf="user.paymentMethod === 'BANK_TRANSFER'" class="row mb-3">
             <div class="col-md-12 col-12">
-              <label for="bankTransferImage" class="form-label small-text">Upload your Bank details as  Qr code for bank transfer</label>
-              <input type="file" id="bankTransferImage" class="form-control form-control-sm" (change)="onImageChange($event)" accept="image/*">
+              <label for="bankTransferImage" class="form-label small-text">{{ 'AUTH.BANK_DETAILS_LABEL' | translate }}</label>
+              <input type="file" id="bankTransferImage" class="form-control form-control-sm"
+                     (change)="onImageChange($event)" accept="image/*">
               <div *ngIf="hasError('bankDetailsImage')" class="text-danger">
                 {{ getError('bankDetailsImage') }}
               </div>
@@ -123,20 +146,26 @@
           <!-- Password and Confirm Password -->
           <div class="row mb-3">
             <div class="col-md-6 col-12">
-              <label for="passwordReg" class="form-label small-text">Password</label>
-              <input type="password" id="passwordReg" class="form-control form-control-sm" [(ngModel)]="user.password" name="password" placeholder="Enter your password" required #password="ngModel" minlength="8" pattern="^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$">
+              <label for="passwordReg" class="form-label small-text">{{ 'AUTH.PASSWORD' | translate }}</label>
+              <input type="password" id="passwordReg" class="form-control form-control-sm"
+                     [(ngModel)]="user.password" name="password"
+                     [placeholder]="'AUTH.PASSWORD_PLACEHOLDER' | translate"
+                     required #password="ngModel" minlength="8" pattern="^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$">
               <div *ngIf="password?.invalid && password?.touched" class="text-danger">
-                Password must be at least 8 characters long and contain both letters and numbers.
+                {{ 'AUTH.VALIDATION.PASSWORD_REQUIREMENTS' | translate }}
               </div>
               <div *ngIf="hasError('password')" class="text-danger">
                 {{ getError('password') }}
               </div>
             </div>
             <div class="col-md-6 col-12">
-              <label for="confirmPassword" class="form-label small-text">Confirm Password</label>
-              <input type="password" id="confirmPassword" class="form-control form-control-sm" [(ngModel)]="user.confirmPassword" name="confirmPassword" placeholder="Confirm your password" required [ngClass]="{ 'is-invalid': passwordMismatch }" (ngModelChange)="checkPasswordMatch()">
+              <label for="confirmPassword" class="form-label small-text">{{ 'AUTH.CONFIRM_PASSWORD' | translate }}</label>
+              <input type="password" id="confirmPassword" class="form-control form-control-sm"
+                     [(ngModel)]="user.confirmPassword" name="confirmPassword"
+                     [placeholder]="'AUTH.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+                     required [ngClass]="{ 'is-invalid': passwordMismatch }" (ngModelChange)="checkPasswordMatch()">
               <div *ngIf="passwordMismatch" class="text-danger">
-                Passwords do not match!
+                {{ 'AUTH.VALIDATION.PASSWORD_MISMATCH' | translate }}
               </div>
               <div *ngIf="hasError('confirmPassword')" class="text-danger">
                 {{ getError('confirmPassword') }}
@@ -145,10 +174,17 @@
           </div>
 
           <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary w-100 btn-sm" [disabled]="passwordMismatch || !signUpForm.valid">Sign Up</button>
+          <button type="submit" class="btn btn-primary w-100 btn-sm" [disabled]="passwordMismatch || !signUpForm.valid">
+            {{ 'AUTH.SIGN_UP.BUTTON' | translate }}
+          </button>
 
           <!-- Login Link -->
-          <p class="text-center mt-3 small-text">Already have an account? <a href="/auth/login" class="login-link">Login here</a></p>
+          <p class="text-center mt-3 small-text">
+            {{ 'AUTH.SIGN_UP.HAVE_ACCOUNT' | translate }}
+            <a href="/auth/login" class="login-link">
+              {{ 'AUTH.SIGN_UP.LOGIN_LINK' | translate }}
+            </a>
+          </p>
         </form>
       </div>
     </div>

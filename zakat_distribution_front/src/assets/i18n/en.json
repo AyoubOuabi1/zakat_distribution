@@ -1,0 +1,172 @@
+{
+  "GENERAL": {
+    "ALL": "All",
+    "SEARCH": "Search",
+    "TYPE": "Type",
+    "ALL_TYPES": "All Types",
+    "DATE": "Date",
+    "NAME": "Name",
+    "AMOUNT": "Amount",
+    "ACTIONS": "Actions",
+    "EXPORT": "Export",
+    "RESET": "Reset",
+    "START_DATE": "Start Date",
+    "END_DATE": "End Date",
+    "TO": "to",
+    "MIN": "Min",
+    "MAX": "Max",
+    "SHOWING": "Showing",
+    "OF": "of",
+    "GENERATE_RECEIPT": "Generate Receipt",
+    "PAGE": "Page",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "EDIT": "Edit",
+    "DETAILS": "Details",
+    "DELETE": "Delete"
+  },
+  "USERS": {
+    "TITLE": "Users List",
+    "FILTER_BY_ROLE": "Filter by Role",
+    "SEARCH_PLACEHOLDER": "Search by name, email, canton, or phone",
+    "NO_USERS_FOUND": "No users found",
+    "DETAILS_TITLE": "User Details",
+    "TOTAL_DONATED": "Total Donated",
+    "TOTAL_RECEIVED": "Total Received",
+    "BANK_DETAILS_IMAGE": "Bank Details Image"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "PROFILE": "Profile",
+    "MY_DONATION": "My Donation",
+    "FINANCIAL_HISTORY": "Financial History",
+    "RECEIVE_HISTORY": "Receive History",
+    "USERS": "Users",
+    "LOGOUT": "Logout",
+    "OVERVIEW": "Dashboard"
+  },
+  "DONATION_HISTORY": {
+    "TITLE": "Donation History",
+    "NO_DONATIONS": "No donations available",
+    "SEARCH_DONOR": "Search by donor name...",
+    "SEARCH_AMOUNT": "Search by amount...",
+    "SEARCH_ID": "Search by ID...",
+    "PAYMENT_METHOD": "Payment Method",
+    "PAYMENT_DETAILS": "Payment Details",
+    "DONOR_NAME": "Donor Full Name",
+    "INVOICE": "Invoice"
+  },
+  "DONATION": {
+    "TITLE": "Donation History",
+    "NO_DONATIONS": "No donations available. Add a new donation to get started.",
+    "ADD_NEW": "Add New Donation",
+    "AMOUNT": "Amount",
+    "PAYMENT_METHOD": "Payment Method",
+    "PAYMENT_DETAILS": "Payment Details",
+    "INVOICE": "Invoice",
+    "ADD_TITLE": "Add New Donation",
+    "EDIT_TITLE": "Edit Donation",
+    "ADD_BTN": "Add Donation",
+    "UPDATE_BTN": "Update Donation"
+  },
+  "RECEIVE_HISTORY": {
+  "TITLE": "Receive History",
+  "NO_HISTORY": "No received history available",
+  "ADD_NEW": "Add New Record",
+  "AMOUNT": "Amount Received",
+  "DATE": "Date Received",
+  "ADD_TITLE": "Add New Record",
+  "EDIT_TITLE": "Edit Record",
+  "ADD_BTN": "Add Record",
+  "UPDATE_BTN": "Update Record"
+},
+  "PAYMENT_METHOD": {
+    "BANK_TRANSFER": "Bank Transfer",
+    "TWINT": "Twint",
+    "CASH": "Cash"
+  },
+  "FINANCIAL_HISTORY": {
+    "TITLE": "Financial Transactions",
+    "SEARCH_PLACEHOLDER": "Search by name...",
+    "DATE_RANGE": "Date Range",
+    "TOTAL_INCOME": "Total Income",
+    "TOTAL_DISTRIBUTIONS": "Total Distributions",
+    "NET_BALANCE": "Net Balance",
+    "DONATION": "Donation",
+    "ZAKAT": "Zakat",
+    "PAYMENT_METHOD": "Payment Method",
+    "MIN_AMOUNT": "Min Amount",
+    "MAX_AMOUNT": "Max Amount"
+  },
+  "AUTH": {
+    "FULL_NAME": "Full Name",
+    "FULL_NAME_PLACEHOLDER": "Enter your full name",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "Enter your email",
+    "ADDRESS": "Address",
+    "ADDRESS_PLACEHOLDER": "Enter your address",
+    "PHONE": "Phone Number",
+    "PHONE_PLACEHOLDER": "Enter your phone number",
+    "CANTON": "Canton",
+    "CANTON_PLACEHOLDER": "Enter canton",
+    "POSTAL_CODE": "Postal Code",
+    "POSTAL_CODE_PLACEHOLDER": "Postal Code",
+    "ROLE": "Role",
+    "ROLES": {
+      "DONOR": "Donor",
+      "RECEIVER": "Receiver",
+      "ADMIN": "Admin"
+    },
+    "PAYMENT_METHOD": "Payment Method",
+    "PAYMENT_METHODS": {
+      "TWINT": "Twint App",
+      "BANK_TRANSFER": "Bank Transfer"
+    },
+    "PROFILE": {
+      "UPDATE_TITLE": "Update Your Profile",
+      "UPDATE_SUBTITLE": "Please keep your information up to date",
+      "PERSONAL_INFO": "Personal Information",
+      "CONTACT_INFO": "Contact Information",
+      "LOCATION_INFO": "Location Details",
+      "ROLE_SELECTION": "Role Selection",
+      "SELECT_ROLE": "Select your role",
+      "RECEIVER_INFO": "Receiver Information",
+      "UPDATE_PASSWORD": "Update Password (Optional)",
+      "UPDATE_BUTTON": "Update Profile",
+      "DONOR_CARD_TITLE": "Join Us in Making a Difference",
+      "DONOR_CARD_DESC": "Your participation in Zakat helps strengthen our community and supports those in need",
+      "BANK_TRANSFER": "for Bank Transfer",
+      "TWINT_TRANSFER": "for Twint App Transfer",
+      "SCAN_TO_DONATE": "Scan to make donation"
+    },
+    "BANK_DETAILS_LABEL": "Upload your Bank details as QR code for bank transfer",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter your password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your password",
+    "SIGN_UP": {
+      "TITLE": "Sign Up",
+      "BUTTON": "Sign Up",
+      "HAVE_ACCOUNT": "Already have an account?",
+      "LOGIN_LINK": "Login here"
+    },
+    "SIGN_IN": {
+      "TITLE": "Sign In",
+      "BUTTON": "Sign In",
+      "NO_ACCOUNT": "Don't have an account?",
+      "SIGN_UP_LINK": "Sign Up here"
+    },
+    "VALIDATION": {
+      "FULL_NAME_REQUIRED": "Full Name is required.",
+      "EMAIL_REQUIRED": "Email is required and must be valid.",
+      "ADDRESS_REQUIRED": "Address is required.",
+      "PHONE_REQUIRED": "Phone Number is required.",
+      "CANTON_REQUIRED": "Canton is required.",
+      "POSTAL_CODE_REQUIRED": "Postal Code is required.",
+      "ROLE_REQUIRED": "Role is required.",
+      "PAYMENT_METHOD_REQUIRED": "Payment method is required.",
+      "PASSWORD_REQUIREMENTS": "Password must be at least 8 characters long and contain both letters and numbers.",
+      "PASSWORD_MISMATCH": "Passwords do not match!"
+    }
+  }
+}
