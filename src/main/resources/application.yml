@@ -9,7 +9,7 @@ spring:
       max-file-size: 2MB
   datasource:
     url: jdbc:postgresql://localhost:5432/zakat_db
-    username: postgres
+    username: zakat_user
     password: root
     driver-class-name: org.postgresql.Driver
   jpa:

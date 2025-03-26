@@ -30,7 +30,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let donation of donations; let i = index">
-                  <td>{{ donation.amount | currency }}</td>
+                  <td>{{ donation.amount }} CHF</td>
                   <td>{{ 'PAYMENT_METHOD.' + donation.paymentMethod | translate }}</td>
                   <td>{{ donation.paymentDetails }}</td>
                   <td>{{ donation.date | date:'mediumDate' }}</td>

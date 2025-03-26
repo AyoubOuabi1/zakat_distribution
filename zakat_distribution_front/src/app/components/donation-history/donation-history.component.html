@@ -67,7 +67,7 @@
                 <tbody>
                 <tr *ngFor="let donation of paginatedDonations">
                   <td>{{ donation.id }}</td>
-                  <td>{{ donation.amount | currency }}</td>
+                  <td>{{ donation.amount  }} CHF</td>
                   <td>{{ donation.paymentMethod }}</td>
                   <td>{{ donation.paymentDetails }}</td>
                   <td>{{ donation.date | date:'mediumDate' }}</td>

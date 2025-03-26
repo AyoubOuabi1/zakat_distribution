@@ -25,7 +25,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let history of receiveHistory; let i = index">
-                <td>{{ history.amountReceived | currency }}</td>
+                <td>{{ history.amountReceived}} CHF</td>
                 <td>{{ history.dateReceived | date:'mediumDate' }}</td>
                 <td>
                   <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#receiveHistoryModal"

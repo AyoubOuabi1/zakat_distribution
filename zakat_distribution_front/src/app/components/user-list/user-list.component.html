@@ -113,10 +113,10 @@
         <p><strong>{{ 'AUTH.CANTON' | translate }}:</strong> {{ selectedUser?.canton }}</p>
         <p><strong>{{ 'AUTH.POSTAL_CODE' | translate }}:</strong> {{ selectedUser?.postalCode }}</p>
         <p *ngIf="selectedUser.role === 'DONOR'">
-          <strong>{{ 'USERS.TOTAL_DONATED' | translate }}:</strong> {{ selectedUser?.totalDonated | currency }}
+          <strong>{{ 'USERS.TOTAL_DONATED' | translate }}:</strong> {{ selectedUser?.totalDonated }} CHF
         </p>
         <p *ngIf="selectedUser.role === 'RECEIVER'">
-          <strong>{{ 'USERS.TOTAL_RECEIVED' | translate }}:</strong> {{ selectedUser?.totalReceived | currency }}
+          <strong>{{ 'USERS.TOTAL_RECEIVED' | translate }}:</strong> {{ selectedUser?.totalReceived }} CHF
         </p>
         <p *ngIf="selectedUser.role === 'RECEIVER'">
           <strong>{{ 'AUTH.PAYMENT_METHOD' | translate }}:</strong> {{ 'AUTH.PAYMENT_METHODS.' + selectedUser?.paymentMethod | translate }}

@@ -67,7 +67,7 @@
           <div class="card bg-success bg-opacity-10">
             <div class="card-body">
               <h6 class="card-title text-success">{{ 'FINANCIAL_HISTORY.TOTAL_INCOME' | translate }}</h6>
-              <p class="card-text fs-4 fw-bold text-success">{{ totalDebits | currency }}</p>
+              <p class="card-text fs-4 fw-bold text-success">{{ totalDebits  }} CHF</p>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
           <div class="card bg-danger bg-opacity-10">
             <div class="card-body">
               <h6 class="card-title text-danger">{{ 'FINANCIAL_HISTORY.TOTAL_DISTRIBUTIONS' | translate }}</h6>
-              <p class="card-text fs-4 fw-bold text-danger">{{ totalCredits | currency }}</p>
+              <p class="card-text fs-4 fw-bold text-danger">{{ totalCredits }} CHF</p>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@
                 {{ 'FINANCIAL_HISTORY.NET_BALANCE' | translate }}
               </h6>
               <p class="card-text fs-4 fw-bold">
-                {{ netBalance | currency }}
+                {{ netBalance }} CHF
               </p>
             </div>
           </div>
@@ -130,7 +130,7 @@
                 'text-success': txn.transactionType === 'DONATION_RECEIVED',
                 'text-danger': txn.transactionType === 'ZAKAT_DISTRIBUTION'
               }">
-              {{ txn.amount | currency }}
+              {{ txn.amount }} CHF
             </td>
             <td>
               <button class="btn btn-sm btn-outline-primary" (click)="generateDocument(txn)"
