@@ -50,7 +50,7 @@ export class PdfService {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
     doc.text(`Donation ID: ${donation.id}`, 20, 130);
-    doc.text(`Amount: ${donation.amount}$`, 20, 140);
+    doc.text(`Amount: ${donation.amount} CHF`, 20, 140);
     doc.text(`Payment Method: ${donation.paymentMethod}`, 20, 150);
     doc.text(`Payment Details: ${donation.paymentDetails}`, 20, 160);
     doc.text(`Date: ${donation.date}`, 20, 170);
