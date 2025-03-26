@@ -168,5 +168,20 @@
       "PASSWORD_REQUIREMENTS": "Le mot de passe doit contenir au moins 8 caractères avec des lettres et des chiffres.",
       "PASSWORD_MISMATCH": "Les mots de passe ne correspondent pas!"
     }
+  },
+  "PDF": {
+    "INVOICE_TITLE": "Facture de Don Zakat",
+    "QURAN_VERSE_1": "\"L'exemple de ceux qui dépensent leurs biens dans le sentier d'Allah est semblable à un grain\"",
+    "QURAN_VERSE_2": "qui a fait pousser sept épis, à cent grains l'épi.\"",
+    "QURAN_VERSE_3": "- Coran (2:261)",
+    "DONOR_NAME": "Nom du Donateur",
+    "DONATION_DETAILS": "Détails du Don",
+    "DONATION_ID": "ID du Don",
+    "AMOUNT": "Montant",
+    "PAYMENT_METHOD": "Méthode de Paiement",
+    "PAYMENT_DETAILS": "Détails de Paiement",
+    "DATE": "Date",
+    "THANK_YOU": "Merci pour Votre Générosité !",
+    "FOOTER_TEXT": "Généré par Aktion.today - Date de génération :"
   }
 }
