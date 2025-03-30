@@ -24,7 +24,12 @@ export class SignUpComponent {
   registerError: string = '';
   passwordMismatch: boolean = false;
   validationErrors: { [key: string]: string } = {}; // To store backend validation errors
-
+  cantons: string[] = [
+    'Aargau', 'Appenzell Ausserrhoden', 'Appenzell Innerrhoden', 'Basel-Landschaft', 'Basel-Stadt',
+    'Bern', 'Fribourg', 'Geneva', 'Glarus', 'Graubünden', 'Jura', 'Lucerne', 'Neuchâtel',
+    'Nidwalden', 'Obwalden', 'St. Gallen', 'Schaffhausen', 'Schwyz', 'Solothurn', 'Thurgau',
+    'Ticino', 'Uri', 'Valais', 'Vaud', 'Zug', 'Zurich'
+  ];
   constructor(private registerService: AuthService, private router: Router) {}
 
   onRegister() {

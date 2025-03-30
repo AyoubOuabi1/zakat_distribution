@@ -29,7 +29,12 @@ export class UserProfileComponent implements OnInit {
   passwordMismatch: boolean = false;
   selectedFile: File | null = null;
   validationErrors: { [key: string]: string } = {};
-
+  cantons: string[] = [
+    'Aargau', 'Appenzell Ausserrhoden', 'Appenzell Innerrhoden', 'Basel-Landschaft', 'Basel-Stadt',
+    'Bern', 'Fribourg', 'Geneva', 'Glarus', 'Graubünden', 'Jura', 'Lucerne', 'Neuchâtel',
+    'Nidwalden', 'Obwalden', 'St. Gallen', 'Schaffhausen', 'Schwyz', 'Solothurn', 'Thurgau',
+    'Ticino', 'Uri', 'Valais', 'Vaud', 'Zug', 'Zurich'
+  ];
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {

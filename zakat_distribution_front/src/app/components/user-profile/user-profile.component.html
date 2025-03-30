@@ -103,22 +103,19 @@
               <div class="mb-3">
                 <h6 class="text-primary mb-2 fs-6">{{ 'AUTH.PROFILE.LOCATION_INFO' | translate }}</h6>
                 <div class="row g-2">
-                  <div class="col-md-6">
-                    <label for="canton" class="form-label small">{{ 'AUTH.CANTON' | translate }}</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      id="canton"
-                      name="canton"
-                      [(ngModel)]="user.canton"
-                      [placeholder]="'AUTH.CANTON_PLACEHOLDER' | translate"
-                      required
-                      #canton="ngModel">
-                    <div *ngIf="canton?.invalid && canton?.touched" class="text-danger small">
+                  <div class="col-md-6 col-12">
+                    <label for="canton" class="form-label small-text">{{ 'AUTH.CANTON' | translate }}</label>
+                    <select id="canton" class="form-control form-control-sm"
+                            [(ngModel)]="user.canton" name="canton"
+                            required #canton="ngModel">
+                      <option value="" disabled selected>{{ 'AUTH.CANTON_PLACEHOLDER' | translate }}</option>
+                      <option *ngFor="let canton of cantons" [value]="canton">{{ canton }}</option>
+                    </select>
+                    <div *ngIf="canton?.invalid && canton?.touched" class="text-danger">
                       {{ 'AUTH.VALIDATION.CANTON_REQUIRED' | translate }}
                     </div>
-                    <div *ngIf="hasError('canton')" class="text-danger small">
-                      {{ getError('canton') | translate }}
+                    <div *ngIf="hasError('canton')" class="text-danger">
+                      {{ getError('canton') }}
                     </div>
                   </div>
                   <div class="col-md-6">

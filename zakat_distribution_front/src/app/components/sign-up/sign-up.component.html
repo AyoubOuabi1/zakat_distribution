@@ -2,6 +2,15 @@
   <div class="row justify-content-center">
     <div class="col-md-6 col-sm-8 col-12">
       <div class="card shadow-sm rounded-4 p-4">
+        <div class="image-card">
+          <div class=" rounded-3 overflow-hidden mb-2 bg-white p-2">
+            <img
+              src="../../../assets/images/logo.jpeg"
+              alt="Bank QR Code 2"
+              class="w-100 object-fit-contain"
+              style="height: 130px; width: 440px; margin: auto; display: block;">
+          </div>
+        </div>
         <h2 class="text-center mb-4">{{ 'AUTH.SIGN_UP.TITLE' | translate }}</h2>
 
         <!-- Register Form -->
@@ -71,10 +80,12 @@
           <div class="row mb-3">
             <div class="col-md-6 col-12">
               <label for="canton" class="form-label small-text">{{ 'AUTH.CANTON' | translate }}</label>
-              <input type="text" id="canton" class="form-control form-control-sm"
-                     [(ngModel)]="user.canton" name="canton"
-                     [placeholder]="'AUTH.CANTON_PLACEHOLDER' | translate"
-                     required #canton="ngModel">
+              <select id="canton" class="form-control form-control-sm"
+                      [(ngModel)]="user.canton" name="canton"
+                      required #canton="ngModel">
+                <option value="" disabled selected>{{ 'AUTH.CANTON_PLACEHOLDER' | translate }}</option>
+                <option *ngFor="let canton of cantons" [value]="canton">{{ canton }}</option>
+              </select>
               <div *ngIf="canton?.invalid && canton?.touched" class="text-danger">
                 {{ 'AUTH.VALIDATION.CANTON_REQUIRED' | translate }}
               </div>
