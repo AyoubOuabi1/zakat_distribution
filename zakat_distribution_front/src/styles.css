@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 body{
   background-color: #E2E5E8;
+  font-family: 'Roboto', sans-serif;
+
+}
+.form-control, .form-label, .btn, .small-text, .text-center, .login-link {
+  font-family: 'Roboto', sans-serif;
 }
